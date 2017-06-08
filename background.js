@@ -1,3 +1,4 @@
+// opens the notifications tab every 1 h.
 var timerID = setInterval(function() {
-    alert("Hello from your Chrome extension!")
-}, 60 * 1000); 
+    chrome.tabs.create({ url: 'notification.html', "active": true });
+	}, 3600000); 
