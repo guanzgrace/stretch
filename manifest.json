@@ -9,12 +9,14 @@
   {
     "matches": [
       "<all_urls>"
-    ]//,
-    //"js": ["content.js"]
+    ]
   }
   ],
   "permissions" : [
-  	"tabs"
+  	"tabs", 
+  	"storage",
+  	"http://physera.com/",
+  	"https://physera.com/"
   ],
   "browser_action": {
         "default_title": "Stretch Reminder",
