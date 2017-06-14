@@ -1,4 +1,17 @@
- function pickRandomExercise(exercises){
+var exercises;
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "https://physera.com/api/exercise", true);
+xhr.onreadystatechange = function() {
+  if (xhr.readyState == 4) {
+    // innerText does not let the attacker inject HTML elements.
+    exercises = xhr.responseText;
+    console.log(exercises);
+  }
+}
+xhr.send();
+
+
+function pickRandomExercise(exercises){
     var exerciseKeys = Object.keys(exercises);
     var randomKey = exerciseKeys[Math.floor(Math.random() * exerciseKeys.length)];
     var selectedExercise = exercises[randomKey];
@@ -44,26 +57,3 @@ function displayExercise(selectedExercise) {
     
     document.getElementById('content').append(htmlText);
 }
-
-
-
-var xhr = new XMLHttpRequest();
-xhr.open("GET", "https://physera.com/api/exercise", true);
-xhr.onreadystatechange = function() {
-  if (xhr.readyState == 4) {
-    // innerText does not let the attacker inject HTML elements.
-    exercises = JSON.parse(xhr.responseText);
-    console.log(exercises);
-    pickRandomExercise(exercises.results);
-  }
-}
-xhr.send();
-
-// if 'exercise.json' doesn't work, try https://physera.com/api/exercise
-/*
-$.getJSON('exercise.json').done(function(data){ 
-    var exercises = data;
-    console.log(exercises);
-    pickRandomExercise(exercises.results);
-    });
-*/

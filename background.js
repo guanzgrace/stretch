@@ -2,3 +2,4 @@
 var timerID = setInterval(function() {
     chrome.tabs.create({ url: 'notification.html', "active": true });
 	}, 3600000); 
+
