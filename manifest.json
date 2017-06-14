@@ -5,6 +5,7 @@
   "background": {
     "scripts": ["background.js"]
   },
+<<<<<<< HEAD
   "content_scripts": [
   {
     "matches": [
@@ -17,10 +18,14 @@
   	"storage",
   	"http://physera.com/",
   	"https://physera.com/"
+=======
+  "permissions" : [
+  	"tabs",
+    "https://physera.com/"
+>>>>>>> origin/master
   ],
   "browser_action": {
         "default_title": "Stretch Reminder",
         "default_popup": "popup.html"
     }
 }
-

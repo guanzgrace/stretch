@@ -55,9 +55,10 @@ function displayExercise(selectedExercise) {
     
     htmlText += '<img src =\"' + imageURL + '\" width = \'320px\'; height = auto/>';
     
-    $('#content').append(htmlText);
+    document.getElementById('content').append(htmlText);
 }
 
+<<<<<<< HEAD
 
 
 /**
@@ -71,3 +72,27 @@ var allExercises = exercises.results;
     }
 
     **/
+=======
+
+
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "https://physera.com/api/exercise", true);
+xhr.onreadystatechange = function() {
+  if (xhr.readyState == 4) {
+    // innerText does not let the attacker inject HTML elements.
+    exercises = JSON.parse(xhr.responseText);
+    console.log(exercises);
+    pickRandomExercise(exercises.results);
+  }
+}
+xhr.send();
+
+// if 'exercise.json' doesn't work, try https://physera.com/api/exercise
+/*
+$.getJSON('exercise.json').done(function(data){ 
+    var exercises = data;
+    console.log(exercises);
+    pickRandomExercise(exercises.results);
+    });
+*/
+>>>>>>> origin/master
