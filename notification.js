@@ -4,8 +4,9 @@ xhr.open("GET", "https://physera.com/api/exercise", true);
 xhr.onreadystatechange = function() {
   if (xhr.readyState == 4) {
     // innerText does not let the attacker inject HTML elements.
-    exercises = xhr.responseText;
-    console.log(exercises);
+    exercises = JSON.parse(xhr.responseText);
+    pickRandomExercise(exercises.results);
+    //console.log(exercises);
   }
 }
 xhr.send();
@@ -29,31 +30,53 @@ function pickRandomExercise(exercises){
 function displayExercise(selectedExercise) {
     var htmlText = '';
 
-    // add the name, description, reps
-    htmlText += '<h2><b>' + selectedExercise.display_name + '</b></h2>';
-    
+    var displayName = document.createElement('h2');
+    displayName.innerHTML = selectedExercise.display_name;
+    document.getElementById('content').append(displayName);
+
     var desc = selectedExercise.data.description;
     var rc = selectedExercise.data.rep_count;
     var rt = selectedExercise.data.rep_time;
 
     if (desc.length != 0 && rc != null & rt != null) {
-        htmlText += '<p> Description: ' + desc + '</p>';
-        htmlText += '<p> Repetitions: ' + rc + 
-        ' repetition(s) every ' + rt + ' seconds.</p>';
+        var description = document.createElement('p');
+        description.innerHTML = "Description: " + desc;
+        document.getElementById('content').append(description);
+        var repetitions = document.createElement('p');
+        var repString = "Repetitions: " + rc;
+        if (rc > 1) {
+            repString += " repetition(s) every " + rt + " seconds.";
+        }
+        else if (rc = 1) {
+            repString += " repetition for " + rt + " seconds.";
+        }
+        repetitions.innerHTML = repString;
+        document.getElementById('content').append(repetitions);
     }
-    // find the instructions
-    var instructions = selectedExercise.data.instructions;
-    htmlText += '<p class="limitWidth"><b>Instructions:</b><br>';
-    for (i in instructions) {
+
+    var br = document.createElement('br');
+    document.getElementById('content').appendChild(br);
+    
+    var inst = selectedExercise.data.instructions;
+
+    var instructions = document.createElement('p');
+    instructions.className = "limitWidth";
+    instructions.innerHTML = "Instructions: \n";
+    document.getElementById('content').append(instructions);
+
+    for (i in inst) {
+        var instruction = document.createElement('p');
         var index = Number(i) + 1;
-        htmlText += index + '. ' +instructions[i].text + '<br>';
+        instruction.innerHTML = index + '. ' + inst[i].text;
+        document.getElementById('content').append(instruction);
     }
-    htmlText += "</p><br>";
 
     // add the images
     var imageURL = selectedExercise.images[0].urls.original;
+
+    var image = document.createElement('img');
+    image.src = imageURL;
+    image.width = 320;
     
-    htmlText += '<img src =\"' + imageURL + '\" width = \'320px\'; height = auto/>';
-    
-    document.getElementById('content').append(htmlText);
+    document.getElementById('content').append(image);
 }
