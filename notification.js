@@ -1,3 +1,25 @@
+// we rather not query the data into storage unless there is a huge need to.
+var isExerciseTooOld = false; 
+chrome.storage.sync.get('exercisesLastSaved', function(date) {
+  var currentDate = new Date();
+  var currentDate_ms = currentDate.getTime();
+  console.log(currentDate_ms);
+  console.log(date);
+  if ((currentDate_ms - date) > (30 * 1000 * 60 * 60 * 24)) {
+    isExerciseTooOld = true;
+  }
+});
+
+console.log(isExerciseTooOld);
+
+if (isExerciseTooOld) { 
+    //  TO IMPLEMENT
+    // if exercise is too old, we need to re-get it from the website and save it to storage
+}
+else { // exercise is not too old
+    // we just need to take exercise out of storage here.
+}
+
 var exercises;
 var xhr = new XMLHttpRequest();
 xhr.open("GET", "https://physera.com/api/exercise", true);
@@ -7,6 +29,11 @@ xhr.onreadystatechange = function() {
     exercises = JSON.parse(xhr.responseText);
     pickRandomExercise(exercises.results);
     //console.log(exercises);
+    var d = new Date();
+    chrome.storage.sync.set({'exercisesLastSaved': d.getTime()}, function() {
+          // Notify that we saved.
+          console.log("Current date " + d.getTime() + " saved as exercisesLastSaved.");
+        });
   }
 }
 xhr.send();
