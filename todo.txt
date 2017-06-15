@@ -1,5 +1,5 @@
-- fix the display on the notification page
-- storage for exercise.json? rather than fetching from the website every time
+done - fix the display on the notification page
+in progress- storage for exercise.json? rather than fetching from the website every time
 -- if exercise.json is not too old (how to check)? use it
 -- otherwise, fetch from website and update exercise.json
 - look into eslint to help format things
