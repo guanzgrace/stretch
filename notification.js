@@ -4,8 +4,9 @@ xhr.open("GET", "https://physera.com/api/exercise", true);
 xhr.onreadystatechange = function() {
   if (xhr.readyState == 4) {
     // innerText does not let the attacker inject HTML elements.
-    exercises = xhr.responseText;
-    console.log(exercises);
+    exercises = JSON.parse(xhr.responseText);
+    pickRandomExercise(exercises.results);
+    //console.log(exercises);
   }
 }
 xhr.send();
@@ -29,6 +30,9 @@ function pickRandomExercise(exercises){
 function displayExercise(selectedExercise) {
     var htmlText = '';
 
+    var displayName = document.createElement('h2');
+    displayName.innerHTML = selectedExercise.display_name;
+    document.getElementById('content').append(displayName);
     // add the name, description, reps
     htmlText += '<h2><b>' + selectedExercise.display_name + '</b></h2>';
     
