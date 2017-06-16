@@ -1,3 +1,7 @@
+chrome.storage.local.getBytesInUse(null, function(bytes) {
+    console.log(bytes); // 5,242,880 bytes max
+});
+
 // we rather not query the data into storage unless there is a huge need to.
 var isExerciseTooOld = false; 
 
