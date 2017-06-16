@@ -1,6 +1,6 @@
 // we rather not query the data into storage unless there is a huge need to.
 var isExerciseTooOld = false; 
-chrome.storage.sync.get('exercisesLastSaved', function(date) {
+chrome.storage.local.get('exercisesLastSaved', function(date) {
   var currentDate = new Date();
   var currentDate_ms = currentDate.getTime();
   console.log(currentDate_ms);
@@ -23,29 +23,47 @@ if (isExerciseTooOld) {
         // innerText does not let the attacker inject HTML elements.
         exercises = JSON.parse(xhr.responseText);
         pickRandomExercise(exercises.results);
-        //console.log(exercises);
         var d = new Date();
-        chrome.storage.sync.set({'exercisesLastSaved': d.getTime()}, function() {
+        chrome.storage.local.set({'exercisesLastSaved': d.getTime()}, function() {
               // Notify that we saved.
               console.log("Current date " + d.getTime() + " saved as exercisesLastSaved.");
             });
 
-        chrome.storage.sync.set({'exercises': exercises}, function() {
-              // Notify that we saved.
-              console.log("Saved exercises.");
-            });
+
+        results = exercises.results;
+        chrome.storage.local.set({'results': results}, function() {
+          console.log("Saved results.");
+          if (chrome.runtime.lastError) {
+            console.log(chrome.runtime.lastError.message);
+            return;
+          }
+          chrome.storage.local.get('results', function(data) {
+            console.log(data);
+          });
+        });
+        
+        chrome.storage.local.set({'numExercises': results.length}, function() {
+            console.log("Num Exercises " + results.length + " saved as numExercises.");
+        });
       }
     }
     xhr.send();
+
+    
 }
 else { // exercise is not too old
     // we just need to take exercise out of storage here.
-    chrome.storage.sync.get('exercises', function(exercises) {
-        pickRandomExercise(exercises.results);
-    });
+    pickRandomExerciseFromStorage();
 }
 
-
+function pickRandomExerciseFromStorage() {
+    var results;
+    chrome.storage.local.get('results', function(data) {
+        results = data.results;
+        console.log(results);
+        pickRandomExercise(results);
+    });
+}
 
 
 function pickRandomExercise(exercises){
