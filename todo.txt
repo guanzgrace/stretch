@@ -6,3 +6,4 @@ in progress - look into eslint to help format things
 - lodash library
 - fix schedule for notifications (on the hour, 9-5?) 
 -- need to have fields where users can input what they want -> storage
+- update aesthetics
