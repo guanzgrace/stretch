@@ -1,0 +1,74 @@
+<html> 
+<head>
+	<meta charset="UTF-8">
+    <title>Stretch Reminder</title>
+
+  <link rel="stylesheet" href="notification.css">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:700,500,400,300,200' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i" rel="stylesheet">
+
+</head>
+<body>
+<div id="content"> 
+	Frequency: <select id="frequency">
+  		<option value="thirty">Every 30 min</option>
+  		<option value="hour">Every hour</option>
+  		<option value="twohours">Every 2 hours</option>
+	</select><br />
+
+	Start Time: <select id="startHour">
+  		<option value="1">1</option>
+  		<option value="2">2</option>
+  		<option value="3">3</option>
+  		<option value="4">4</option>
+  		<option value="5">5</option>
+  		<option value="6">6</option>
+  		<option value="7">7</option>
+  		<option value="8">8</option>
+  		<option value="9" selected="selected">9</option>
+  		<option value="10">10</option>
+  		<option value="11">11</option>
+  		<option value="12">12</option>
+	</select>:<select id="startMin">
+  		<option value="00" selected="selected">00</option>
+  		<option value="15">15</option>
+  		<option value="30">30</option>
+  		<option value="45">45</option>
+	</select><select id="startHalf">
+  		<option value="AM" selected="selected">AM</option>
+  		<option value="PM">PM</option>
+	</select>
+
+	<br />
+  	End Time: <select id="endHour">
+  		<option value="1">1</option>
+  		<option value="2">2</option>
+  		<option value="3">3</option>
+  		<option value="4">4</option>
+  		<option value="5" selected="selected">5</option>
+  		<option value="6">6</option>
+  		<option value="7">7</option>
+  		<option value="8">8</option>
+  		<option value="9">9</option>
+  		<option value="10">10</option>
+  		<option value="11">11</option>
+  		<option value="12">12</option>
+	</select>:<select id="endMin">
+  		<option value="00" selected="selected">00</option>
+  		<option value="15">15</option>
+  		<option value="30">30</option>
+  		<option value="45">45</option>
+	</select><select id="endHalf">
+  		<option value="AM">AM</option>
+  		<option value="PM" selected="selected">PM</option>
+	</select><br><br>
+  	<input id ="update" type="button" value="Update">
+
+
+</div>
+
+<script src="options.js"></script>
+</body>
+</html>
+
+
