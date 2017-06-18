@@ -1,5 +1,9 @@
+// Queries for the noficiation html page.
+
+// 5,242,880 bytes max. currently ~1 mil. hopefully will not need to configure 
+// a new storage system. (clear storage every time a new dataset is queried?)
 chrome.storage.local.getBytesInUse(null, function(bytes) {
-    console.log(bytes); // 5,242,880 bytes max
+    console.log(bytes); 
 });
 
 // we rather not query the data into storage unless there is a huge need to.
@@ -10,13 +14,13 @@ var isExerciseTooOld = false;
 chrome.storage.local.get('exercisesLastSaved', function(date) {
   var currentDate = new Date();
   var currentDate_ms = currentDate.getTime();
-  console.log(currentDate_ms);
-  console.log(date);
+  // console.log(currentDate_ms);
+  // console.log(date);
   if ((currentDate_ms - date) > (30 * 1000 * 60 * 60 * 24)) {
     isExerciseTooOld = true;
   }
 });
-console.log(isExerciseTooOld);
+console.log("Is the exercise too old?" + isExerciseTooOld);
 
 // if the exercise is too old, re-get from website and save to storage.
 if (isExerciseTooOld) { 
@@ -97,7 +101,7 @@ function displayExercise(selectedExercise) {
         var repetitions = document.createElement('p');
         var repString = "Repetitions: " + rc;
         if (rc > 1) {
-            repString += " repetition(s) every " + rt + " seconds.";
+            repString += " repetition(s), one every " + rt + " seconds.";
         }
         else if (rc = 1) {
             repString += " repetition for " + rt + " seconds.";

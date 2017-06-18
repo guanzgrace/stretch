@@ -1,3 +1,4 @@
+// update savings for frequency, start hour/min/ampm, end hour/min/ampm
 document.getElementById("update").onclick = function() {
 	update();
 }
@@ -20,6 +21,11 @@ function update() {
     var endHalf = document.getElementById("endHalf");
     var endHalfVal = endHalf.options[endHalf.selectedIndex].value;
 
+    if (endHourVal + endHalfVal > startHourVal + startHalfVal) {
+    	alert("End time cannot be before start time.");
+    	return;
+    }
+
 	chrome.storage.local.set({'freq': freqVal}, function() {
       console.log("Saved frequency: " + freqVal);
     });
@@ -41,4 +47,8 @@ function update() {
     chrome.storage.local.set({'ehav': endHalfVal}, function() {
       console.log("Saved ehav: " + endHalfVal);
     });
+
+    alert("Options saved.");
 }
+
+update(); // set the default options
