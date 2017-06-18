@@ -1,9 +1,6 @@
-done - fix the display on the notification page
-done - storage for exercise.json? rather than fetching from the website every time
-done - if exercise.json is not too old (how to check)? use it
-done - otherwise, fetch from website and update exercise.json
-in progress - look into eslint to help format things
-- lodash library
-in progress - fix schedule for notifications (on the hour, 9-5?) 
--- need to have fields where users can input what they want -> storage
-- update aesthetics
+done - notification page
+done - storage for exercise.json
+done - fix schedule for notifications
+in progress - update aesthetics for popup.html
+in progress - need to have fields where users can input what they want -> storage
+- migrate array processing to lodash library?
