@@ -1,12 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
-body {
-    font-family: Lato, sans-serif;
-    width: 100px;
-    height: 50px;
-    text-align: center;
-}
-
-#app-container {
-    width: 100%;
-    height: 100%
-}
+body { font-family: Lato, sans-serif; font-size: 14px; width: 250px; height: 98px; text-align: center; }
+.buttonlink { margin-top: 5px; padding: 5px; color: #000; border: 1px solid #ccc; display: block; text-decoration: none; }
+a { background-color: #b1c5dd; }
+a:hover { background-color: #ccc; }
