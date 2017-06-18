@@ -21,7 +21,11 @@ function update() {
     var endHalf = document.getElementById("endHalf");
     var endHalfVal = endHalf.options[endHalf.selectedIndex].value;
 
-    if (endHourVal + endHalfVal > startHourVal + startHalfVal) {
+    if (endHourVal + endHalfVal < startHourVal + startHalfVal) {
+    	console.log(endHourVal);
+    	console.log(endHalfVal);
+    	console.log(startHourVal);
+    	console.log(startHalfVal);
     	alert("End time cannot be before start time.");
     	return;
     }
@@ -50,5 +54,3 @@ function update() {
 
     alert("Options saved.");
 }
-
-update(); // set the default options
