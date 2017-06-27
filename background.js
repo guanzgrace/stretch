@@ -5,8 +5,6 @@ function createAlarm(freq, shv, smv, shav, ehv, emv, ehav) {
    // var keys = ['freq', 'shv', 'smv', 'shav', 'ehv', 'emv', 'ehav'];
     //var opts = [thirty, 9, 00, AM, 5, 00, PM];
 
-    chrome.alarms.clearAll();
-
     var now = new Date();
     var day = now.getDate();
     if (now.getHours() >= ehv + ehav) { // 9 AM already passed
@@ -25,13 +23,17 @@ function createAlarm(freq, shv, smv, shav, ehv, emv, ehav) {
 }
 
 function openNotification() {
-
     chrome.tabs.create({ url: 'notification.html', active: true });
 }
 
 // listen for time
 chrome.alarms.onAlarm.addListener(function(alarm) {
-    if (alarm.name === 'alarmStart') {
+    var enabled = true;
+    chrome.storage.local.get('enabled', function(option) {
+        enabled = option;
+    });
+    
+    if (alarm.name === 'alarmStart' && enabled) {
         openNotification();
     }
 });
