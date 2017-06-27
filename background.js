@@ -5,6 +5,8 @@ function createAlarm(freq, shv, smv, shav, ehv, emv, ehav) {
    // var keys = ['freq', 'shv', 'smv', 'shav', 'ehv', 'emv', 'ehav'];
     //var opts = [thirty, 9, 00, AM, 5, 00, PM];
 
+    chrome.alarms.clearAll();
+
     var now = new Date();
     var day = now.getDate();
     if (now.getHours() >= ehv + ehav) { // 9 AM already passed
@@ -12,7 +14,7 @@ function createAlarm(freq, shv, smv, shav, ehv, emv, ehav) {
     }
 
     // '+' casts the date to a number, like [object Date].getTime();
-    var timestamp = +new Date(now.getFullYear(), now.getMonth(), day, shv + shav, smv, 0, 0);
+    var timestamp = +new Date(now.getFullYear(), now.getMonth(), parseInt(day), parseInt(shv) + parseInt(shav), parseInt(smv), 0, 0);
     //                        YYYY               MM              DD  HH MM SS MS
 
     // Create
@@ -23,6 +25,7 @@ function createAlarm(freq, shv, smv, shav, ehv, emv, ehav) {
 }
 
 function openNotification() {
+
     chrome.tabs.create({ url: 'notification.html', active: true });
 }
 

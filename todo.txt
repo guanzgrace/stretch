@@ -4,5 +4,6 @@ done - fix schedule for notifications
 done - update aesthetics for popup.html and options.html and notifications.html
 done - options page
 in progress - making sure that options fully work
+- alarms reset
 - migrate array processing to lodash library?
 - toggle on/off button
