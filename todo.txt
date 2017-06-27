@@ -3,7 +3,9 @@ done - storage for exercise.json
 done - fix schedule for notifications
 done - update aesthetics for popup.html and options.html and notifications.html
 done - options page
+done - alarms reset
+done - toggle on/off button
 in progress - making sure that options fully work
-- alarms reset
-- migrate array processing to lodash library?
-- toggle on/off button
+
+need to test options from 9-5 and make sure they turn off post 5 pm!
+make sure that when we change options, the alarms get reset!
