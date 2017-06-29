@@ -1,13 +1,13 @@
 // opens the notifications tab every 30m/1h/2h
-// users should be able to set a start time hm
 
+// creates the alarm with the given parameters: frequency, start hour value, start 
+// minute value, start half value, end hour value, end minute value, end half value
+// type to parseInt so that 2 + 3 =/= 23
 function createAlarm(freq, shv, smv, shav, ehv, emv, ehav) {
-   // var keys = ['freq', 'shv', 'smv', 'shav', 'ehv', 'emv', 'ehav'];
-    //var opts = [thirty, 9, 00, AM, 5, 00, PM];
-
     var now = new Date();
     var day = now.getDate();
-    if (now.getHours() >= ehv + ehav) { // 9 AM already passed
+    // 9 AM already passed
+    if (now.getHours() >= parseInt(ehv) + parseInt(ehav) { 
         day += 1;
     }
 
@@ -30,7 +30,9 @@ function openNotification() {
 chrome.alarms.onAlarm.addListener(function(alarm) {
     var enabled = true;
     chrome.storage.local.get('enabled', function(option) {
-        enabled = option;
+        if (option != null) {
+            enabled = option;
+        }
     });
     
     if (alarm.name === 'alarmStart' && enabled) {
@@ -50,12 +52,12 @@ var ehav = 12;
 // query old options, null should be accounted for but just in case...
 chrome.storage.local.get(['freq', 'shv', 'smv', 'shav', 'ehv', 'emv', 'ehav']
                             , function(options) {
-    if(options.freq != null) freq = options.freq;
-    if(options.shv != null)  shv = options.shv;
-    if(options.smv != null)  smv = options.smv;
-    if(options.shav != null)  shav = options.shav;
-    if(options.ehv != null)  ehv = options.ehv;
-    if(options.emv != null)  emv = options.emv;
-    if(options.ehav != null)  ehav = options.ehav;
+    if(options.freq != null) freq = parseInt(options.freq);
+    if(options.shv != null)  shv = parseInt(options.shv);
+    if(options.smv != null)  smv = parseInt(options.smv);
+    if(options.shav != null)  shav = parseInt(options.shav);
+    if(options.ehv != null)  ehv = parseInt(options.ehv);
+    if(options.emv != null)  emv = parseInt(options.emv);
+    if(options.ehav != null)  ehav = parseInt(options.ehav);
 });
 createAlarm(freq, shv, smv, shav, ehv, emv, ehav);

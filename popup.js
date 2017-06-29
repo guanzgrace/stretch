@@ -5,7 +5,7 @@ document.getElementById("enable").onclick = function(){
 	    });
 		document.getElementById("enable").firstChild.data = "Disable";
 	}
-	else {
+	else { // currently says disable
 		chrome.storage.local.set({'enabled': false}, function() {
 	      console.log("Enabled set to false.");
 	    });
