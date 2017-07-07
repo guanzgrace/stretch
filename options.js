@@ -47,9 +47,6 @@ function update() {
     chrome.storage.local.set({'ehav': endHalfVal}, function() {
       console.log("Saved ehav: " + endHalfVal);
     });
-    
-
-    chrome.alarms.clearAll();
 
     alert("Options saved.");
 

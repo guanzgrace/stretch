@@ -6,19 +6,20 @@
 function createAlarm(freq, shv, smv, shav, ehv, emv, ehav) {
     var now = new Date();
     var day = now.getDate();
-    // 9 AM already passed
-    if (now.getHours() >= parseInt(ehv) + parseInt(ehav) { 
+    // start time already passed
+    if (now.getHours() >= parseInt(ehv) + parseInt(ehav)) { 
         day += 1;
     }
 
     // '+' casts the date to a number, like [object Date].getTime();
-    var timestamp = +new Date(now.getFullYear(), now.getMonth(), parseInt(day), parseInt(shv) + parseInt(shav), parseInt(smv), 0, 0);
-    //                        YYYY               MM              DD  HH MM SS MS
+    var timestamp = +new Date(now.getFullYear(), now.getMonth(), day, shv+shav, smv, 0, 0);
+    //                        YYYY               MM              DD     HH       MM  SS MS
 
     // Create
     chrome.alarms.create('alarmStart', {
         when: timestamp,
-        periodInMinutes: freq
+        periodInMinutes: 1
+        //periodInMinutes: freq
     });
 }
 
@@ -28,36 +29,45 @@ function openNotification() {
 
 // listen for time
 chrome.alarms.onAlarm.addListener(function(alarm) {
-    var enabled = true;
     chrome.storage.local.get('enabled', function(option) {
-        if (option != null) {
-            enabled = option;
+        if (option.enabled != null) {
+            if (alarm.name === 'alarmStart' && option.enabled) {
+                openNotification();
+            }
+        } else { // first time, initalize
+            if (alarm.name === 'alarmStart') {
+                openNotification();
+            }
         }
+    });   
+});
+
+
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+    chrome.alarms.clearAll();
+    recreateAlarm();
+});
+
+function recreateAlarm() {
+    // default = 9-5, 30 min apart
+    var freq = 30;
+    var shv = 9;
+    var smv = 0;
+    var shav = 0;
+    var ehv = 5;
+    var emv = 0;
+    var ehav = 12;
+    // query old options, null should be accounted for but just in case...
+    chrome.storage.local.get(['freq', 'shv', 'smv', 'shav', 'ehv', 'emv', 'ehav']
+                                , function(options) {
+        if(options.freq != null) freq = parseInt(options.freq);
+        if(options.shv != null)  shv = parseInt(options.shv);
+        if(options.smv != null)  smv = parseInt(options.smv);
+        if(options.shav != null)  shav = parseInt(options.shav);
+        if(options.ehv != null)  ehv = parseInt(options.ehv);
+        if(options.emv != null)  emv = parseInt(options.emv);
+        if(options.ehav != null)  ehav = parseInt(options.ehav);
     });
-    
-    if (alarm.name === 'alarmStart' && enabled) {
-        openNotification();
-    }
-});
-
-// default = 9-5, 30 min apart
-var freq = 30;
-var shv = 9;
-var smv = 0;
-var shav = 0;
-var ehv = 5;
-var emv = 0;
-var ehav = 12;
-
-// query old options, null should be accounted for but just in case...
-chrome.storage.local.get(['freq', 'shv', 'smv', 'shav', 'ehv', 'emv', 'ehav']
-                            , function(options) {
-    if(options.freq != null) freq = parseInt(options.freq);
-    if(options.shv != null)  shv = parseInt(options.shv);
-    if(options.smv != null)  smv = parseInt(options.smv);
-    if(options.shav != null)  shav = parseInt(options.shav);
-    if(options.ehv != null)  ehv = parseInt(options.ehv);
-    if(options.emv != null)  emv = parseInt(options.emv);
-    if(options.ehav != null)  ehav = parseInt(options.ehav);
-});
-createAlarm(freq, shv, smv, shav, ehv, emv, ehav);
+    createAlarm(freq, shv, smv, shav, ehv, emv, ehav);
+}
+recreateAlarm();
