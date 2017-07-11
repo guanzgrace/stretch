@@ -52,7 +52,20 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
 // if storage is changed, recreate the alarm
 chrome.storage.onChanged.addListener(function(changes, namespace) {
     console.log("storage changed");
-    recreateAlarm();
+    var anythingImportantChanged = false;
+    var changedItems = Object.keys(changes);
+ 
+    for (var item of changedItems) {
+        if (item == 'freq' || item == 'shv' || item == 'smv'
+            || item == 'shav' || item == 'ehv' || item == 'emv' || item == 'ehav') {
+            anythingImportantChanged = true;
+        }
+        console.log(item + " has changed:");
+        console.log("Old value: " + changes[item].oldValue);
+        console.log("New value: " + changes[item].newValue);
+    }
+
+    if (anythingImportantChanged) { recreateAlarm(); }
 });
 
 // recreates the alarm either by default or by storage, if they exist
