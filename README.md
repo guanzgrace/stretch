@@ -10,6 +10,7 @@ Progress:
 - done - options page
 - done - alarms reset
 - done - toggle on/off button
-- in progress - making sure that options fully work
-- in progress -- need to test options from 9-5 and make sure they turn off post 5 pm!
-- in progress -- make sure that when we change options, the alarms get reset!
+- done - making sure that options fully work
+- done - need to test options from 9-5 and make sure they turn off post 5 pm!
+- done - make sure that when we change options, the alarms get reset!
+- in progress - testing
