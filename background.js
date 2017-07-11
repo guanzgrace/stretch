@@ -18,8 +18,8 @@ function createAlarm(freq, shv, smv, shav, ehv, emv, ehav) {
     // Create
     chrome.alarms.create('alarmStart', {
         when: timestamp,
-        periodInMinutes: 1
-        //periodInMinutes: freq
+        //periodInMinutes: 1
+        periodInMinutes: freq
     });
 }
 
