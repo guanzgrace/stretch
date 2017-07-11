@@ -41,7 +41,7 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
         if(option.ehv != null)  ehv = parseInt(option.ehv);
         if(option.ehav != null)  ehav = parseInt(option.ehav);
         if (alarm.name === 'alarmStart' // make sure we're turning on the right alarm
-            && ((ehv + ehav <= now.getHours())) // only open before the end time
+            && ((ehv + ehav >= now.getHours())) // only open before the end time
             && ((option.enabled != null && option.enabled) // if enabled, make sure it's enabled
                 || option.enabled == null))  { // or if we are initializing for the first time
             openNotification();
