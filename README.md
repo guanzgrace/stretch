@@ -13,4 +13,7 @@ Progress:
 - done - making sure that options fully work
 - done - need to test options from 9-5 and make sure they turn off post 5 pm!
 - done - make sure that when we change options, the alarms get reset!
-- in progress - testing
+- done - testing
+- DONE WITH VERSION 1
+- in progress - remove options page
+- in progress - replace options page with frequency button
