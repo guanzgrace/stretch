@@ -3,7 +3,7 @@
   "name": "Stretch Reminder",
   "version": "0.1",
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["js/background.js"]
   },
   "permissions" : [
   	"tabs",
