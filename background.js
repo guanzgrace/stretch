@@ -6,7 +6,7 @@ function createAlarm(freq) {
     console.log("Calling createAlarm in background.js.")
     var now = new Date();
     var day = now.getDate();
-    
+
     //                                     YYYY              MM  DD   HH MM SS MS
     var timestamp = +new Date(now.getFullYear(), now.getMonth(), day, 1, 0, 0, 0);
 
@@ -54,8 +54,8 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     for (var item of changedItems) {
         if (item == 'freq') { anythingImportantChanged = true; }
         console.log(item + " has changed in storage: " + 
-            "Old value: " + changes[item].oldValue +
-            "New value: " + changes[item].newValue);
+            " Old value: " + changes[item].oldValue +
+            " New value: " + changes[item].newValue);
     }
     if (anythingImportantChanged) { recreateAlarm(); }
 });
