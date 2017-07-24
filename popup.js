@@ -1,4 +1,7 @@
-chrome.storage.local.get(['enabled', 'freq'], function(option) {
+chrome.storage.local.get('enabled', function(option) {
+	console.log("Grabbing enabled and frequency from storage.");
+
+	// enabled
     if (option.enabled != null) {
 		if (! option.enabled) {
 			document.getElementById("enable").firstChild.data = "Currently disabled. Click to Enable.";
@@ -8,12 +11,14 @@ chrome.storage.local.get(['enabled', 'freq'], function(option) {
     } else { // first initialization
     	document.getElementById("enable").firstChild.data = "Currently disabled. Click to Enable.";
     }
+
+    // frequency
     if (option.freq != null) {
 		if (parseInt(option.freq) == 30) {
 			document.getElementById("frequency").firstChild.data = "Current Frequency: Every 30 Minutes";
 		} else if (parseInt(option.freq) == 60) { // freq is every 1 hour
 			document.getElementById("frequency").firstChild.data = "Current Frequency: Every 1 Hour";
-		} else {
+		} else { // freq should be every 2 hours
 			document.getElementById("frequency").firstChild.data = "Current Frequency: Every 2 Hours";
 		}
     } else { // first initialization
@@ -42,7 +47,8 @@ document.getElementById("frequency").onclick = function(){
 	      console.log("Set frequency to every 30 minutes.");
 	    });
 		document.getElementById("frequency").firstChild.data = "Current Frequency: Every 30 Minutes";
-	} else { // currently says 30 min, set to be every hour
+	} // currently says 30 min, set to be every hour
+	else if(document.getElementById("frequency").firstChild.data == "Current Frequency: Every 30 Minutes")  { 
 		chrome.storage.local.set({'freq': 60}, function() {
 	      console.log("Set frequency to every 60 minutes.");
 	    });
