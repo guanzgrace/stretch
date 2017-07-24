@@ -15,5 +15,7 @@ Progress:
 - done - make sure that when we change options, the alarms get reset!
 - done - testing
 - DONE WITH VERSION 1
-- in progress - remove options page
-- in progress - replace options page with frequency button
+- done - remove options page
+- done - replace options page with frequency button
+- in progress - update aesthetics
+- in progress - testing
