@@ -17,5 +17,7 @@ Progress:
 - DONE WITH VERSION 1
 - done - remove options page
 - done - replace options page with frequency button
+- in progress - don't open new tabs when Chrome is off
+- in progress - put notification page into docs and create about page
 - in progress - update aesthetics
 - in progress - testing
