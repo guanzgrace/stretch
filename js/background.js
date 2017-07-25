@@ -22,7 +22,7 @@ function createAlarm(freq) {
 // opens the notification in a new browser tab.
 function openNotification() {
     console.log("Calling openNotification in background.js.");
-    chrome.tabs.create({ url: 'notification.html', active: true });
+    chrome.windows.create({ url: 'notification.html', type: "popup" });
 }
 
 // recreates the alarm either by default or by storage, if they exist
