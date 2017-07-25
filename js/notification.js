@@ -9,21 +9,29 @@ chrome.storage.local.getBytesInUse(null, function(bytes) {
 // check how long ago the exercises were saved, if they were saved more than
 // 1 month ago then re-get them and store them locally.
 chrome.storage.local.get('exercisesLastSaved', function(date) {
-    if (date == null) { queryAPI(); }
+    if (date == null) { 
+        queryAPI(); 
+        grabAndDisplayExercise();
+    }
     else { // date != null
-        var results;
-        chrome.storage.local.get('results', function(data) {
-            results = data.results;
-            console.log(results);
-            pickRandomExercise(results);
-        });
+        grabAndDisplayExercise();
     }
   var currentDate = new Date();
   var currentDate_ms = currentDate.getTime();
   if ((currentDate_ms - date) > (30 * 1000 * 60 * 60 * 24)) {
     queryAPI();
+    grabAndDisplayExercise();
   }
 });
+
+function grabAndDisplayExercise() {
+    var results;
+    chrome.storage.local.get('results', function(data) {
+        results = data.results;
+        console.log(results);
+        pickRandomExercise(results);
+    });
+}
 
 // if the exercise is too old, re-get from website and save to storage.
 function queryAPI(){ 
