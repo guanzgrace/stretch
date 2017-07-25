@@ -49,13 +49,10 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
 
 // if storage is changed, recreate the alarm
 chrome.storage.onChanged.addListener(function(changes, namespace) {
-    var anythingImportantChanged = false;
     var changedItems = Object.keys(changes);
     for (var item of changedItems) {
-        if (item == 'freq') { anythingImportantChanged = true; }
         console.log(item + " has changed in storage: " + 
             " Old value: " + changes[item].oldValue +
             " New value: " + changes[item].newValue);
     }
-    if (anythingImportantChanged) { recreateAlarm(); }
 });
