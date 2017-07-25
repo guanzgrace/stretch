@@ -90,14 +90,10 @@ function displayExercise(selectedExercise) {
     displayName.innerHTML = selectedExercise.display_name;
     document.getElementById('content').append(displayName);
 
-    var desc = selectedExercise.data.description;
     var rc = selectedExercise.data.rep_count;
     var rt = selectedExercise.data.rep_time;
 
-    if (desc.length != 0 && rc != null & rt != null) {
-        var description = document.createElement('p');
-        description.innerHTML = "Description: " + desc;
-        document.getElementById('content').append(description);
+    if (rc != null & rt != null) {
         var repetitions = document.createElement('p');
         var repString = "Repetitions: " + rc;
         if (rc > 1) {
