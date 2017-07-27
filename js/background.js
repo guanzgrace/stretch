@@ -27,7 +27,7 @@ function openNotification() {
         if(tabs.length > 0){
             console.log("Tab exists");
             console.log(tabs);
-            chrome.tabs.update(tabs[0].id, {url: tabs[0].url, active:true});
+            chrome.tabs.update(tabs[0].id, {url: tabs[0].url, active:true, highlighted:true});
         } else {
             chrome.windows.create({ url: 'notification.html', type: "popup" });
         }
