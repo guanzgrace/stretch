@@ -60,3 +60,17 @@ document.getElementById("frequency").onclick = function(){
 		document.getElementById("frequency").firstChild.data = "Current Frequency: Every 2 Hours";
 	}
 };
+
+document.getElementById("notification").onclick = function(){
+    console.log("Calling openNotification in background.js.");
+    var popupUrl = chrome.runtime.getURL('/notification.html');
+    chrome.tabs.query({url:popupUrl}, function(tabs){
+        if(tabs.length > 0){
+            console.log("Tab exists");
+            console.log(tabs);
+            chrome.tabs.update(tabs[0].id, {url: tabs[0].url, active:true});
+        } else {
+            chrome.windows.create({ url: 'notification.html', type: "popup" });
+        }
+    });
+};

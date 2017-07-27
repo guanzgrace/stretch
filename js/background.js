@@ -14,15 +14,24 @@ function createAlarm(freq) {
     chrome.alarms.clearAll();
     chrome.alarms.create('alarmStart', {
         when: timestamp,
-        periodInMinutes: freq // for debugging, open the notifications every 1 min
-        //periodInMinutes: 1
+        //periodInMinutes: freq // for debugging, open the notifications every 1 min
+        periodInMinutes: 1
     });
 }
 
 // opens the notification in a new browser tab.
 function openNotification() {
     console.log("Calling openNotification in background.js.");
-    chrome.windows.create({ url: 'notification.html', type: "popup" });
+    var popupUrl = chrome.runtime.getURL('/notification.html');
+    chrome.tabs.query({url:popupUrl}, function(tabs){
+        if(tabs.length > 0){
+            console.log("Tab exists");
+            console.log(tabs);
+            chrome.tabs.update(tabs[0].id, {url: tabs[0].url, active:true});
+        } else {
+            chrome.windows.create({ url: 'notification.html', type: "popup" });
+        }
+    });
 }
 
 // recreates the alarm either by default or by storage, if they exist
