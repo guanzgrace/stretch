@@ -3,21 +3,13 @@
 Stretch is a Google Chrome extension that reminds users to stretch occasionally. Options allow the user to enable/disable the application and set the timing and frequency of reminders. Exercises are taken from the Physera API.
 
 Progress:
-- done - notification page
-- done - storage for exercise.json
-- done - fix schedule for notifications
-- done - update aesthetics for popup.html and options.html and notifications.html
-- done - options page
-- done - alarms reset
-- done - toggle on/off button
-- done - making sure that options fully work
-- done - need to test options from 9-5 and make sure they turn off post 5 pm!
-- done - make sure that when we change options, the alarms get reset!
-- done - testing
-- DONE WITH VERSION 1
+- Working Version 1: notification page, storage for exercise.json, fix schedule for notifications, update aesthetics for popup.html and options.html and notifications.html, options page, alarms reset, toggle on/off button, making sure that options fully work, need to test options from 9-5 and make sure they turn off post 5 pm, make sure that when we change options, the alarms get reset, testing
+- In Progress Version 1:
 - done - remove options page
 - done - replace options page with frequency button
-- in progress - don't open new tabs when Chrome is off
-- in progress - put notification page into docs and create about page
-- in progress - update aesthetics
-- in progress - testing
+- done - don't open new tabs when Chrome is off
+- in progress - make window active when using chrome.tab.updates
+- update aesthetics
+	- numbered lists left justified for readability
+	- bootstrap everything
+- different types of exercises (wrist, back/neck, all)
