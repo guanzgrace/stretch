@@ -130,7 +130,9 @@ function displayExercise(selectedExercise) {
 
     var image = document.createElement('img');
     image.src = imageURL;
-    image.width = 320;
+    image.setAttribute("class", "img-responsive");
+    image.setAttribute("max-width", "100%");
+    image.setAttribute("height", "auto");
     
-    document.getElementById('content').append(image);
+    document.getElementById('image').append(image);
 }
