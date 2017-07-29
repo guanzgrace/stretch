@@ -1,5 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
 body { font-family: Lato, sans-serif; text-align: center; font-size: 16px; }
 img { display: block; margin: auto; }
-#content { margin: 30 auto; text-align: left; }
-.limitWidth { display: block; margin: auto; max-width: 550px; }
+#content { text-align: left; }

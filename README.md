@@ -9,7 +9,5 @@ Progress:
 - done - replace options page with frequency button
 - done - don't open new tabs when Chrome is off
 - in progress - make window active when using chrome.tab.updates
-- update aesthetics
-	- numbered lists left justified for readability
-	- bootstrap everything
-- different types of exercises (wrist, back/neck, all)
+- done - bootstrapped
+- in progress - different types of exercises (wrist, back/neck, all)
