@@ -9,58 +9,102 @@ chrome.storage.local.getBytesInUse(null, function(bytes) {
 // check how long ago the exercises were saved, if they were saved more than
 // 1 month ago then re-get them and store them locally.
 chrome.storage.local.get('exercisesLastSaved', function(date) {
-    queryAPI();
-    if (date == null) { queryAPI(); }
+    console.log("Querying exercisesLastSaved for date " + date.exercisesLastSaved);
+    if (date.exercisesLastSaved == null) { queryAllAPIs(); }
     else {
         var currentDate = new Date();
         var currentDate_ms = currentDate.getTime();
-        if ((currentDate_ms - date) > (30 * 1000 * 60 * 60 * 24)) { queryAPI(); }
+        if ((currentDate_ms - date) > (30 * 1000 * 60 * 60 * 24)) { queryAllAPIs(); }
     }
     grabAndDisplayExercise();
 });
 
-function grabAndDisplayExercise() {
-    var results;
-    chrome.storage.local.get('results', function(data) {
-        results = data.results;
-        pickRandomExercise(results);
-    });
+function queryAllAPIs() {
+    queryAPI(2056805, "elbowwrist");
+    queryAPI(2056807, "lowerbackcore");
+    queryAPI(2056810, "knee");
 }
 
 // if the exercise is too old, re-get from website and save to storage.
-function queryAPI(){ 
+function queryAPI(workoutID, workoutType){ 
     var exercises;
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://physera.com/api/workout/2056805", true);
+    var URL = "https://physera.com/api/workout/" + workoutID;
+    xhr.open("GET", URL, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
-            // choose and display the exercise
-            exercises = JSON.parse(xhr.responseText);
-            // save the date we got this exercise
-            var d = new Date();
+            exercises = JSON.parse(xhr.responseText); // get the exercises
+            
+            var d = new Date(); // save the date we got this exercise
             chrome.storage.local.set({'exercisesLastSaved': d.getTime()}, function() {
                 console.log("Current date " + d.getTime() + " saved as exercisesLastSaved.");
             });
 
             // save the results
-            results = exercises.exercises;
-            chrome.storage.local.set({'results': results}, function() {
-              console.log("Saved results.");
-              console.log(results);
-              if (chrome.runtime.lastError) {
-                console.log(chrome.runtime.lastError.message);
-                return;
-              }
-            });
+            if (workoutType == "elbowwrist") {
+                chrome.storage.local.set({"elbowwristresults": exercises}, function() {
+                  console.log("Saved " + workoutType + " results.");
+                  console.log(exercises.exercises);
+                  if (chrome.runtime.lastError) {
+                    console.log(chrome.runtime.lastError.message);
+                    return;
+                  }
+                });
+            } else if (workoutType == "lowerbackcore") {
+                chrome.storage.local.set({"lowerbackcoreresults": exercises}, function() {
+                  console.log("Saved " + workoutType + " results.");
+                  console.log(exercises.exercises);
+                  if (chrome.runtime.lastError) {
+                    console.log(chrome.runtime.lastError.message);
+                    return;
+                  }
+                });
+            } else if (workoutType == "knee") {
+                chrome.storage.local.set({"kneeresults": exercises}, function() {
+                  console.log("Saved " + workoutType + " results.");
+                  console.log(exercises.exercises);
+                  if (chrome.runtime.lastError) {
+                    console.log(chrome.runtime.lastError.message);
+                    return;
+                  }
+                });
+            }
             
-            // save the number of exercises stored (currently not needed)
-            chrome.storage.local.set({'numExercises': results.length}, function() {
-                console.log("Num Exercises " + results.length + " saved as numExercises.");
-            });
         } // end if readystate = 4 statement
     } // end xhr on ready state change function
     xhr.send();  
 } 
+
+function grabAndDisplayExercise() {
+    console.log("Displaying Exercse");
+    var results;
+    chrome.storage.local.get('type', function(data) {
+        var type;
+        if (data == null) { type = "elbowwrist"; }
+        else { type = data.type; }
+        if (type == "elbowwrist") {
+            chrome.storage.local.get("elbowwristresults", function(data) {
+                console.log(data);
+                results = data.elbowwristresults.exercises;
+                pickRandomExercise(results);
+            });
+        } else if (type == "lowerbackcore") {
+            chrome.storage.local.get("lowerbackcoreresults", function(data) {
+                console.log(data);
+                results = data.lowerbackcoreresults.exercises;
+                pickRandomExercise(results);
+            });
+        } else if (type == "knee") {
+            chrome.storage.local.get("kneeresults", function(data) {
+                console.log(data);
+                results = data.kneeresults.exercises;
+                pickRandomExercise(results);
+            });
+        }
+        
+    });
+    
+}
 
 // picks a random exercise, displays if it's valid
 function pickRandomExercise(exercises){
