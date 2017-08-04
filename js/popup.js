@@ -27,9 +27,9 @@ chrome.storage.local.get(['enabled', 'freq', 'type'], function(option) {
 
     // type 
     if (option.type != null) {
-		if (option.type == "elbow-wrist") {
+		if (option.type == "elbowwrist") {
 			document.getElementById("type").firstChild.data = "Elbow & Wrist";
-		} else if (option.type == "lowerback-core") { 
+		} else if (option.type == "lowerbackcore") { 
 			document.getElementById("type").firstChild.data = "Lower Back & Core";
 		} else if (option.type == "knee") { 
 			document.getElementById("type").firstChild.data = "Knee";
