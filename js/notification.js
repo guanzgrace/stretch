@@ -9,26 +9,20 @@ chrome.storage.local.getBytesInUse(null, function(bytes) {
 // check how long ago the exercises were saved, if they were saved more than
 // 1 month ago then re-get them and store them locally.
 chrome.storage.local.get('exercisesLastSaved', function(date) {
-    if (date == null) { 
-        queryAPI(); 
-        grabAndDisplayExercise();
-    }
-    else { // date != null
-        grabAndDisplayExercise();
-    }
-  var currentDate = new Date();
-  var currentDate_ms = currentDate.getTime();
-  if ((currentDate_ms - date) > (30 * 1000 * 60 * 60 * 24)) {
     queryAPI();
+    if (date == null) { queryAPI(); }
+    else {
+        var currentDate = new Date();
+        var currentDate_ms = currentDate.getTime();
+        if ((currentDate_ms - date) > (30 * 1000 * 60 * 60 * 24)) { queryAPI(); }
+    }
     grabAndDisplayExercise();
-  }
 });
 
 function grabAndDisplayExercise() {
     var results;
     chrome.storage.local.get('results', function(data) {
         results = data.results;
-        console.log(results);
         pickRandomExercise(results);
     });
 }
@@ -37,12 +31,11 @@ function grabAndDisplayExercise() {
 function queryAPI(){ 
     var exercises;
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://physera.com/api/exercise", true);
+    xhr.open("GET", "https://physera.com/api/workout/2056805", true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
             // choose and display the exercise
             exercises = JSON.parse(xhr.responseText);
-            pickRandomExercise(exercises.results);
             // save the date we got this exercise
             var d = new Date();
             chrome.storage.local.set({'exercisesLastSaved': d.getTime()}, function() {
@@ -50,9 +43,10 @@ function queryAPI(){
             });
 
             // save the results
-            results = exercises.results;
+            results = exercises.exercises;
             chrome.storage.local.set({'results': results}, function() {
               console.log("Saved results.");
+              console.log(results);
               if (chrome.runtime.lastError) {
                 console.log(chrome.runtime.lastError.message);
                 return;
@@ -72,7 +66,8 @@ function queryAPI(){
 function pickRandomExercise(exercises){
     var exerciseKeys = Object.keys(exercises);
     var randomKey = exerciseKeys[Math.floor(Math.random() * exerciseKeys.length)];
-    var selectedExercise = exercises[randomKey];
+    var selectedExercise = exercises[randomKey].exercise;
+    console.log(selectedExercise);
     
     var valid = ! selectedExercise.display_name.includes("DELETE");
 
