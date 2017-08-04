@@ -1,20 +1,13 @@
 // Queries for the noficiation html page.
 
-// 5,242,880 bytes max. currently ~1 mil. hopefully will not need to configure 
-// a new storage system. (clear storage every time a new dataset is queried?)
-chrome.storage.local.getBytesInUse(null, function(bytes) {
-    console.log(bytes); 
-});
-
 // check how long ago the exercises were saved, if they were saved more than
 // 1 month ago then re-get them and store them locally.
 chrome.storage.local.get('exercisesLastSaved', function(date) {
-    console.log("Querying exercisesLastSaved for date " + date.exercisesLastSaved);
     if (date.exercisesLastSaved == null) { queryAllAPIs(); }
     else {
         var currentDate = new Date();
         var currentDate_ms = currentDate.getTime();
-        if ((currentDate_ms - date) > (30 * 1000 * 60 * 60 * 24)) { queryAllAPIs(); }
+        if ((currentDate_ms - date.exercisesLastSaved) > (30 * 1000 * 60 * 60 * 24)) { queryAllAPIs(); }
     }
     grabAndDisplayExercise();
 });
@@ -41,32 +34,18 @@ function queryAPI(workoutID, workoutType){
             });
 
             // save the results
+            // we can't do this modularly since set({key: result}) results in an error
             if (workoutType == "elbowwrist") {
                 chrome.storage.local.set({"elbowwristresults": exercises}, function() {
                   console.log("Saved " + workoutType + " results.");
-                  console.log(exercises.exercises);
-                  if (chrome.runtime.lastError) {
-                    console.log(chrome.runtime.lastError.message);
-                    return;
-                  }
                 });
             } else if (workoutType == "lowerbackcore") {
                 chrome.storage.local.set({"lowerbackcoreresults": exercises}, function() {
                   console.log("Saved " + workoutType + " results.");
-                  console.log(exercises.exercises);
-                  if (chrome.runtime.lastError) {
-                    console.log(chrome.runtime.lastError.message);
-                    return;
-                  }
                 });
             } else if (workoutType == "knee") {
                 chrome.storage.local.set({"kneeresults": exercises}, function() {
                   console.log("Saved " + workoutType + " results.");
-                  console.log(exercises.exercises);
-                  if (chrome.runtime.lastError) {
-                    console.log(chrome.runtime.lastError.message);
-                    return;
-                  }
                 });
             }
             
@@ -76,7 +55,6 @@ function queryAPI(workoutID, workoutType){
 } 
 
 function grabAndDisplayExercise() {
-    console.log("Displaying Exercse");
     var results;
     chrome.storage.local.get('type', function(data) {
         var type;
@@ -84,26 +62,18 @@ function grabAndDisplayExercise() {
         else { type = data.type; }
         if (type == "elbowwrist") {
             chrome.storage.local.get("elbowwristresults", function(data) {
-                console.log(data);
-                results = data.elbowwristresults.exercises;
-                pickRandomExercise(results);
+                pickRandomExercise(data.elbowwristresults.exercises);
             });
         } else if (type == "lowerbackcore") {
             chrome.storage.local.get("lowerbackcoreresults", function(data) {
-                console.log(data);
-                results = data.lowerbackcoreresults.exercises;
-                pickRandomExercise(results);
+                pickRandomExercise(data.lowerbackcoreresults.exercises);
             });
         } else if (type == "knee") {
             chrome.storage.local.get("kneeresults", function(data) {
-                console.log(data);
-                results = data.kneeresults.exercises;
-                pickRandomExercise(results);
+                pickRandomExercise(data.kneeresults.exercises);
             });
         }
-        
     });
-    
 }
 
 // picks a random exercise, displays if it's valid
@@ -111,38 +81,24 @@ function pickRandomExercise(exercises){
     var exerciseKeys = Object.keys(exercises);
     var randomKey = exerciseKeys[Math.floor(Math.random() * exerciseKeys.length)];
     var selectedExercise = exercises[randomKey].exercise;
-    console.log(selectedExercise);
-    
     var valid = ! selectedExercise.display_name.includes("DELETE");
-
-    // CHECK IF THE EXERCISE IS VALID
-    if (valid) {
-        displayExercise(selectedExercise);
-    } else { 
-        pickRandomExercise(exercises);
-    }
+    if (valid) { displayExercise(selectedExercise); }
+    else { pickRandomExercise(exercises); }
 }
 
 // javascript to append to the html page to display an exercise, precondition it is valid
 function displayExercise(selectedExercise) {
-    var htmlText = '';
-
     var displayName = document.createElement('h2');
     displayName.innerHTML = selectedExercise.display_name;
     document.getElementById('content').append(displayName);
 
     var rc = selectedExercise.data.rep_count;
     var rt = selectedExercise.data.rep_time;
-
     if (rc != null & rt != null) {
         var repetitions = document.createElement('p');
-        var repString = "Repetitions: " + rc;
-        if (rc > 1) {
-            repString += " repetition(s), one every " + rt + " seconds.";
-        }
-        else if (rc = 1) {
-            repString += " repetition for " + rt + " seconds.";
-        }
+        var repString = rc;
+        if (rc > 1) { repString += " repetitions, one every " + rt + " seconds."; }
+        else if (rc = 1) { repString += " repetition for " + rt + " seconds."; }
         repetitions.innerHTML = repString;
         document.getElementById('content').append(repetitions);
     }
@@ -151,12 +107,10 @@ function displayExercise(selectedExercise) {
     document.getElementById('content').appendChild(br);
     
     var inst = selectedExercise.data.instructions;
-
     var instructions = document.createElement('p');
     instructions.className = "limitWidth";
     instructions.innerHTML = "Instructions: \n";
     document.getElementById('content').append(instructions);
-
     for (i in inst) {
         var instruction = document.createElement('p');
         var index = Number(i) + 1;
@@ -164,14 +118,11 @@ function displayExercise(selectedExercise) {
         document.getElementById('content').append(instruction);
     }
 
-    // add the images
     var imageURL = selectedExercise.images[0].urls.original;
-
     var image = document.createElement('img');
     image.src = imageURL;
     image.setAttribute("class", "img-responsive");
     image.setAttribute("max-width", "100%");
     image.setAttribute("height", "auto");
-    
     document.getElementById('image').append(image);
 }

@@ -1,19 +1,12 @@
+// popup javascript
 chrome.storage.local.get(['enabled', 'freq', 'type'], function(option) {
-	console.log("Grabbing enabled and frequency from storage.");
+    if (option.enabled != null) { // enabled or disabled; for first initialization, enable
+		if (! option.enabled) { document.getElementById("enable").firstChild.data = "Disabled"; } 
+		else { document.getElementById("enable").firstChild.data = "Enabled"; }  	
+    } 
+    else {  document.getElementById("enable").firstChild.data = "Disabled"; }
 
-	// enabled
-    if (option.enabled != null) {
-		if (! option.enabled) {
-			document.getElementById("enable").firstChild.data = "Disabled";
-		} else { // is disabled
-			document.getElementById("enable").firstChild.data = "Enabled";
-		}  	
-    } else { // first initialization
-    	document.getElementById("enable").firstChild.data = "Disabled";
-    }
-
-    // frequency
-    if (option.freq != null) {
+    if (option.freq != null) { // what's the frequency? 30, 60, or 120
 		if (parseInt(option.freq) == 30) {
 			document.getElementById("frequency").firstChild.data = "Every 30 Minutes";
 		} else if (parseInt(option.freq) == 60) { // freq is every 1 hour
@@ -25,8 +18,7 @@ chrome.storage.local.get(['enabled', 'freq', 'type'], function(option) {
     	document.getElementById("frequency").firstChild.data = "Every 30 Minutes";
     }
 
-    // type 
-    if (option.type != null) {
+    if (option.type != null) { // type: currently supported elbow/wrist, lowerback/core, knee
 		if (option.type == "elbowwrist") {
 			document.getElementById("type").firstChild.data = "Elbow & Wrist";
 		} else if (option.type == "lowerbackcore") { 
@@ -75,19 +67,19 @@ document.getElementById("frequency").onclick = function(){
 };
 
 document.getElementById("type").onclick = function(){
-	// lower back core
+	// currently elbow/wrist, set to lowerback/core
 	if(document.getElementById("type").firstChild.data == "Elbow & Wrist") {
 		chrome.storage.local.set({'type': "lowerbackcore"}, function() {
 	      console.log("Set type to lowerbackcore.");
 	    });
 		document.getElementById("type").firstChild.data = "Lower Back & Core";
-	} // knee
+	} // currently lower back/core, set to knee
 	else if(document.getElementById("type").firstChild.data == "Lower Back & Core")  { 
 		chrome.storage.local.set({'type': "knee"}, function() {
 	      console.log("Set type to knee.");
 	    });
 		document.getElementById("type").firstChild.data = "Knee";
-	} else { // elbow wrist
+	} else { // currently knee, set to elbow/wrist
 		chrome.storage.local.set({'type': "elbowwrist"}, function() {
 	      console.log("Set type to elbowwrist.");
 	    });
@@ -100,11 +92,8 @@ document.getElementById("notification").onclick = function(){
     var popupUrl = chrome.runtime.getURL('/notification.html');
     chrome.tabs.query({url:popupUrl}, function(tabs){
     	window.close();
-        if(tabs.length > 0){
-            console.log("Tab exists");
-            console.log(tabs);
-            chrome.tabs.remove(tabs[0].id);
-        }
-        chrome.windows.create({ url: 'notification.html', type: "popup", width: 1000, height: 650, top: 20, left: 20 });
+        if(tabs.length > 0){ chrome.tabs.remove(tabs[0].id); }
+        chrome.windows.create({ url: 'notification.html', type: "popup",
+        					 width: 1000, height: 650, top: 20, left: 20 });
     });
 };
