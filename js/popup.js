@@ -99,11 +99,12 @@ document.getElementById("notification").onclick = function(){
     console.log("Calling openNotification in background.js.");
     var popupUrl = chrome.runtime.getURL('/notification.html');
     chrome.tabs.query({url:popupUrl}, function(tabs){
+    	window.close();
         if(tabs.length > 0){
             console.log("Tab exists");
             console.log(tabs);
             chrome.tabs.remove(tabs[0].id);
         }
-        chrome.windows.create({ url: 'notification.html', type: "popup" });
+        chrome.windows.create({ url: 'notification.html', type: "popup", width: 1000, height: 650, top: 20, left: 20 });
     });
 };
