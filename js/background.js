@@ -19,7 +19,8 @@ function openNotification() {
     var popupUrl = chrome.runtime.getURL('/notification.html');
     chrome.tabs.query({url:popupUrl}, function(tabs){
         if(tabs.length > 0){ chrome.tabs.remove(tabs[0].id); }
-        chrome.windows.create({ url: 'notification.html', type: "popup" });
+        chrome.windows.create({ url: 'notification.html', type: "popup",
+                             width: 1000, height: 650, top: 20, left: 20 });
     });
 }
 
@@ -35,10 +36,12 @@ function recreateAlarm() {
 // listen for time and open the notification if it meets correct conditions
 chrome.alarms.onAlarm.addListener(function(alarm) {
     chrome.storage.local.get('enabled', function(option) {
-        if (alarm.name === 'alarmStart' // make sure we're turning on the right alarm
-            && ((option.enabled != null && option.enabled) // if enabled, make sure it's enabled
-                || option.enabled == null))  { // or if we are initializing for the first time
-            openNotification();
+        if (option.enabled != null) {
+            if (alarm.name === 'alarmStart' // make sure we're turning on the right alarm
+                && ((option.enabled != null && option.enabled) // if enabled, make sure it's enabled
+                    || option.enabled == null))  { // or if we are initializing for the first time
+                openNotification();
+            }
         }
     });   
 });

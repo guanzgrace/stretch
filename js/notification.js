@@ -3,23 +3,28 @@
 // check how long ago the exercises were saved, if they were saved more than
 // 1 month ago then re-get them and store them locally.
 chrome.storage.local.get('exercisesLastSaved', function(date) {
-    if (date.exercisesLastSaved == null) { queryAllAPIs(); }
+    if (date.exercisesLastSaved == null) { 
+        queryAllAPIs(grabAndDisplayExercise); 
+    }
     else {
         var currentDate = new Date();
         var currentDate_ms = currentDate.getTime();
-        if ((currentDate_ms - date.exercisesLastSaved) > (30 * 1000 * 60 * 60 * 24)) { queryAllAPIs(); }
+        if ((currentDate_ms - date.exercisesLastSaved) > (30 * 1000 * 60 * 60 * 24)) { 
+            queryAllAPIs(grabAndDisplayExercise); 
+        } else {
+            grabAndDisplayExercise();
+        }
     }
-    grabAndDisplayExercise();
 });
 
-function queryAllAPIs() {
-    queryAPI(2056805, "elbowwrist");
-    queryAPI(2056807, "lowerbackcore");
-    queryAPI(2056810, "knee");
+function queryAllAPIs(callback) {
+    queryAPI(2056805, "elbowwrist", callback);
+    queryAPI(2056807, "lowerbackcore", callback);
+    queryAPI(2056810, "knee", callback);
 }
 
 // if the exercise is too old, re-get from website and save to storage.
-function queryAPI(workoutID, workoutType){ 
+function queryAPI(workoutID, workoutType, callback){ 
     var exercises;
     var xhr = new XMLHttpRequest();
     var URL = "https://physera.com/api/workout/" + workoutID;
@@ -46,6 +51,7 @@ function queryAPI(workoutID, workoutType){
             } else if (workoutType == "knee") {
                 chrome.storage.local.set({"kneeresults": exercises}, function() {
                   console.log("Saved " + workoutType + " results.");
+                  callback();
                 });
             }
             
@@ -58,7 +64,7 @@ function grabAndDisplayExercise() {
     var results;
     chrome.storage.local.get('type', function(data) {
         var type;
-        if (data == null) { type = "elbowwrist"; }
+        if (data.type == null) { type = "elbowwrist"; }
         else { type = data.type; }
         if (type == "elbowwrist") {
             chrome.storage.local.get("elbowwristresults", function(data) {

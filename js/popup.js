@@ -4,7 +4,7 @@ chrome.storage.local.get(['enabled', 'freq', 'type'], function(option) {
 		if (! option.enabled) { document.getElementById("enable").firstChild.data = "Disabled"; } 
 		else { document.getElementById("enable").firstChild.data = "Enabled"; }  	
     } 
-    else {  document.getElementById("enable").firstChild.data = "Disabled"; }
+    else {  document.getElementById("enable").firstChild.data = "Enabled"; }
 
     if (option.freq != null) { // what's the frequency? 30, 60, or 120
 		if (parseInt(option.freq) == 30) {
