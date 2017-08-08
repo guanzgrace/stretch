@@ -20,7 +20,7 @@ function openNotification() {
     chrome.tabs.query({url:popupUrl}, function(tabs){
         if(tabs.length > 0){ chrome.tabs.remove(tabs[0].id); }
         chrome.windows.create({ url: 'notification.html', type: "popup",
-                             width: 1000, height: 650, top: 20, left: 20 });
+                             width: 1000, height: 670, top: 20, left: 20 });
     });
 }
 
