@@ -70,7 +70,6 @@ function grabAndDisplayExercise() {
             });
         } else if (type == "fullbody") {
             var upperOrLower = Math.round(Math.random());
-            console.log(upperOrLower);
             if (upperOrLower == 0) {
                 chrome.storage.local.get("upperbodyresults", function(data) {
                     pickRandomExercise(data.upperbodyresults.exercises);
