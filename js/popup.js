@@ -23,7 +23,9 @@ chrome.storage.local.get(['enabled', 'freq', 'type'], function(option) {
 			document.getElementById("type").firstChild.data = "Upper Body";
 		} else if (option.type == "lowerbody") { 
 			document.getElementById("type").firstChild.data = "Lower Body";
-		} 	
+		} else if (option.type == "fullbody") { 
+			document.getElementById("type").firstChild.data = "Full Body";
+		} 
     } else { // first initialization
     	document.getElementById("type").firstChild.data = "Upper Body";
     }
@@ -71,7 +73,12 @@ document.getElementById("type").onclick = function(){
 	      console.log("Set type to lowerbody.");
 	    });
 		document.getElementById("type").firstChild.data = "Lower Body";
-	} else { // currently lower body, set to upper body
+	} else if (document.getElementById("type").firstChild.data == "Lower Body") { // currently lower body, set to full body
+		chrome.storage.local.set({'type': "fullbody"}, function() {
+	      console.log("Set type to fullbody.");
+	    });
+		document.getElementById("type").firstChild.data = "Full Body";
+	} else if (document.getElementById("type").firstChild.data == "Full Body") { // currently full body, set to upper body
 		chrome.storage.local.set({'type': "upperbody"}, function() {
 	      console.log("Set type to upperbody.");
 	    });
