@@ -19,15 +19,13 @@ chrome.storage.local.get(['enabled', 'freq', 'type'], function(option) {
     }
 
     if (option.type != null) { // type: currently supported elbow/wrist, lowerback/core, knee
-		if (option.type == "elbowwrist") {
-			document.getElementById("type").firstChild.data = "Elbow & Wrist";
-		} else if (option.type == "lowerbackcore") { 
-			document.getElementById("type").firstChild.data = "Lower Back & Core";
-		} else if (option.type == "knee") { 
-			document.getElementById("type").firstChild.data = "Knee";
+		if (option.type == "upperbody") {
+			document.getElementById("type").firstChild.data = "Upper Body";
+		} else if (option.type == "lowerbody") { 
+			document.getElementById("type").firstChild.data = "Lower Body";
 		} 	
     } else { // first initialization
-    	document.getElementById("type").firstChild.data = "Elbow & Wrist";
+    	document.getElementById("type").firstChild.data = "Upper Body";
     }
 });
 
@@ -67,23 +65,17 @@ document.getElementById("frequency").onclick = function(){
 };
 
 document.getElementById("type").onclick = function(){
-	// currently elbow/wrist, set to lowerback/core
-	if(document.getElementById("type").firstChild.data == "Elbow & Wrist") {
-		chrome.storage.local.set({'type': "lowerbackcore"}, function() {
-	      console.log("Set type to lowerbackcore.");
+	// currently upper body, set to lower body
+	if(document.getElementById("type").firstChild.data == "Upper Body") {
+		chrome.storage.local.set({'type': "lowerbody"}, function() {
+	      console.log("Set type to lowerbody.");
 	    });
-		document.getElementById("type").firstChild.data = "Lower Back & Core";
-	} // currently lower back/core, set to knee
-	else if(document.getElementById("type").firstChild.data == "Lower Back & Core")  { 
-		chrome.storage.local.set({'type': "knee"}, function() {
-	      console.log("Set type to knee.");
+		document.getElementById("type").firstChild.data = "Lower Body";
+	} else { // currently lower body, set to upper body
+		chrome.storage.local.set({'type': "upperbody"}, function() {
+	      console.log("Set type to upperbody.");
 	    });
-		document.getElementById("type").firstChild.data = "Knee";
-	} else { // currently knee, set to elbow/wrist
-		chrome.storage.local.set({'type': "elbowwrist"}, function() {
-	      console.log("Set type to elbowwrist.");
-	    });
-		document.getElementById("type").firstChild.data = "Elbow & Wrist";
+		document.getElementById("type").firstChild.data = "Upper Body";
 	}
 };
 
@@ -94,6 +86,6 @@ document.getElementById("notification").onclick = function(){
     	window.close();
         if(tabs.length > 0){ chrome.tabs.remove(tabs[0].id); }
         chrome.windows.create({ url: 'notification.html', type: "popup",
-        					 width: 1150, height: 700, top: 20, left: 20 });
+        					 width: 1150, height: 750, top: 20, left: 20 });
     });
 };

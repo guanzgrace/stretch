@@ -18,9 +18,8 @@ chrome.storage.local.get('exercisesLastSaved', function(date) {
 });
 
 function queryAllAPIs(callback) {
-    queryAPI(2056805, "elbowwrist", callback);
-    queryAPI(2056807, "lowerbackcore", callback);
-    queryAPI(2056810, "knee", callback);
+    queryAPI(2074597, "upperbody", callback);
+    queryAPI(2074598, "lowerbody", callback);
 }
 
 // if the exercise is too old, re-get from website and save to storage.
@@ -40,21 +39,16 @@ function queryAPI(workoutID, workoutType, callback){
 
             // save the results
             // we can't do this modularly since set({key: result}) results in an error
-            if (workoutType == "elbowwrist") {
-                chrome.storage.local.set({"elbowwristresults": exercises}, function() {
+            if (workoutType == "upperbody") {
+                chrome.storage.local.set({"upperbodyresults": exercises}, function() {
                   console.log("Saved " + workoutType + " results.");
                 });
-            } else if (workoutType == "lowerbackcore") {
-                chrome.storage.local.set({"lowerbackcoreresults": exercises}, function() {
-                  console.log("Saved " + workoutType + " results.");
-                });
-            } else if (workoutType == "knee") {
-                chrome.storage.local.set({"kneeresults": exercises}, function() {
+            } else if (workoutType == "lowerbody") {
+                chrome.storage.local.set({"lowerbodyresults": exercises}, function() {
                   console.log("Saved " + workoutType + " results.");
                   callback();
                 });
             }
-            
         } // end if readystate = 4 statement
     } // end xhr on ready state change function
     xhr.send();  
@@ -64,21 +58,17 @@ function grabAndDisplayExercise() {
     var results;
     chrome.storage.local.get('type', function(data) {
         var type;
-        if (data.type == null) { type = "elbowwrist"; }
+        if (data.type == null) { type = "upperbody"; }
         else { type = data.type; }
-        if (type == "elbowwrist") {
-            chrome.storage.local.get("elbowwristresults", function(data) {
-                pickRandomExercise(data.elbowwristresults.exercises);
+        if (type == "upperbody") {
+            chrome.storage.local.get("upperbodyresults", function(data) {
+                pickRandomExercise(data.upperbodyresults.exercises);
             });
-        } else if (type == "lowerbackcore") {
-            chrome.storage.local.get("lowerbackcoreresults", function(data) {
-                pickRandomExercise(data.lowerbackcoreresults.exercises);
+        } else if (type == "lowerbody") {
+            chrome.storage.local.get("lowerbodyresults", function(data) {
+                pickRandomExercise(data.lowerbodyresults.exercises);
             });
-        } else if (type == "knee") {
-            chrome.storage.local.get("kneeresults", function(data) {
-                pickRandomExercise(data.kneeresults.exercises);
-            });
-        }
+        } 
     });
 }
 
