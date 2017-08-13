@@ -10,6 +10,9 @@
   "background": {
     "scripts": ["js/background.js"]
   },
+  "offline_enabled": true,
+  "homepage_url": "https://gsquared.me/stretch/instructions.html",
+  "short_name": "Stretch",
   "permissions" : [
   	"tabs",
   	"storage",
