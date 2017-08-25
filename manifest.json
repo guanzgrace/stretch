@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Stretch Reminder",
-  "version": "0.1",
+  "version": "0.2.0",
   "description": "Reminds you to stretch every 30, 60, or 120 minutes with upper, lower, or full body stretches.",
   "icons": {"16": "logo/Logo_physera_16.png",
            "48": "logo/Logo_physera_48.png",
