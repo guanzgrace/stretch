@@ -10,7 +10,7 @@ function createAlarm(freq) {
 
     chrome.alarms.clearAll();
     chrome.alarms.create('alarmStart', {
-        when: timestamp, periodInMinutes: freq //periodInMinutes: 1
+        when: timestamp, periodInMinutes: freq
     });
 }
 
@@ -26,11 +26,11 @@ function openNotification() {
 
 // recreates the alarm either by default or by storage, if they exist
 function recreateAlarm() {
-    var freq = 30; // default 30 min apart; query old options; account for null
+    // account for null
     chrome.storage.local.get('freq', function(options) {
-        if(options.freq != null) { freq = parseInt(options.freq); }
+        if(options.freq != null) { createAlarm(parseInt(options.freq)); } 
+        else { createAlarm(30); }
     });
-    createAlarm(freq);
 }
 
 // listen for time and open the notification if it meets correct conditions
@@ -42,6 +42,11 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
                     || option.enabled == null))  { // or if we are initializing for the first time
                 openNotification();
             }
+        } else { // option.enabled == null
+            openNotification();
+            chrome.storage.local.set({'enabled': true}, function() {
+              console.log("Enabled set to true.");
+            });
         }
     });   
 });
