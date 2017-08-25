@@ -1,10 +1,10 @@
 // popup javascript
 chrome.storage.local.get(['enabled', 'freq', 'type'], function(option) {
     if (option.enabled != null) { // enabled or disabled; for first initialization, enable
-		if (! option.enabled) { document.getElementById("enable").firstChild.data = "Disabled"; } 
-		else { document.getElementById("enable").firstChild.data = "Enabled"; }  	
+		if (! option.enabled) { document.getElementById("checkbox1").checked = false; } 
+		else { document.getElementById("checkbox1").checked = true; }  	
     } 
-    else {  document.getElementById("enable").firstChild.data = "Enabled"; }
+    else {  document.getElementById("checkbox1").checked = true; }
 
     if (option.freq != null) { // what's the frequency? 30, 60, or 120
 		if (parseInt(option.freq) == 30) {
@@ -31,17 +31,15 @@ chrome.storage.local.get(['enabled', 'freq', 'type'], function(option) {
     }
 });
 
-document.getElementById("enable").onclick = function(){
-	if(document.getElementById("enable").firstChild.data == "Disabled") {
-		chrome.storage.local.set({'enabled': true}, function() {
-	      console.log("Enabled set to true.");
-	    });
-		document.getElementById("enable").firstChild.data = "Enabled";
-	} else { // currently says disable
+document.getElementById("checkbox1").onclick = function(){
+	if(document.getElementById("checkbox1").checked == false) {
 		chrome.storage.local.set({'enabled': false}, function() {
 	      console.log("Enabled set to false.");
 	    });
-		document.getElementById("enable").firstChild.data = "Disabled";
+	} else { // currently says disable
+		chrome.storage.local.set({'enabled': true}, function() {
+	      console.log("Enabled set to true.");
+	    });
 	}
 };
 
