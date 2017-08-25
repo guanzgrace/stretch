@@ -6,3 +6,6 @@ html { position: relative; min-height: 100%; height: 100%; }
 .footer { position: absolute; bottom: 0; width: 100%; height: 60px; padding-top: 15px; background-color: #f9f9f9; }
 .bigger { font-size: 20px; line-height: 44px; }
 .jumbotron { background-image: linear-gradient(to top, #fdc284, #f2783c); color: #ffffff; }
+.Rectangle-3-Copy-2 { width: 217px; height: 62px; object-fit: contain; border-radius: 66px; background-color: #fe763a; }
+.testhere { padding: 30px; object-fit: contain; border-radius: 66px; background-color: #fe763a;  }
+.relative { position: relative; }
