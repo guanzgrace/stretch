@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);
-body { font-family: 'Roboto', sans-serif; font-size: 20px; width: 180px; height: auto; text-align: center; user-select: none;  }
+body { font-family: 'Roboto', sans-serif; font-size: 20px; width: 200px; height: auto; text-align: center; user-select: none;  }
 .header { margin-top: 5px; padding: 5px; color: #000; display: block; text-decoration: none; }
-.buttonlink { width: 160px; margin: 5px; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #fff; display: block; text-decoration: none; border-radius: 66px; }
+.buttonlink { width: 190px; margin: 5px; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #fff; display: block; text-decoration: none; border-radius: 66px; }
 .orange { background-color: #fe763a; }
 .orange:hover { background-color: #fe9467; }
 .gray { background-color: #9d9eac; }
@@ -18,10 +18,9 @@ a { font-size: 14px; }
 }
 #toggles{
 	width: 40px;
-	margin: 0 auto;
+	margin: 20px auto;
 	text-align:center;
 }
-
 .ios-toggle,.ios-toggle:active{
 	position:absolute;
 	top:-5000px;
