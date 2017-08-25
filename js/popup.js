@@ -93,6 +93,6 @@ document.getElementById("notification").onclick = function(){
     	window.close();
         if(tabs.length > 0){ chrome.tabs.remove(tabs[0].id); }
         chrome.windows.create({ url: 'notification.html', type: "popup",
-        					 width: 1150, height: 750, top: 20, left: 20 });
+        					 width: 1150, height: 720, top: 20, left: 20 });
     });
 };

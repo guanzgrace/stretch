@@ -103,7 +103,8 @@ function displayExercise(selectedExercise) {
     var rt = selectedExercise.data.rep_time;
     if (rc != null & rt != null) {
         var repetitions = document.createElement('p');
-        var repString = rc;
+        var repString = "<i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i> ";
+        repString += rc;
         if (rc > 1) { repString += " repetitions, one every " + rt + " seconds."; }
         else if (rc = 1) { repString += " repetition for " + rt + " seconds."; }
         repetitions.innerHTML = repString;
@@ -114,7 +115,7 @@ function displayExercise(selectedExercise) {
     document.getElementById('content').appendChild(br);
     
     var inst = selectedExercise.data.instructions;
-    var instructions = document.createElement('p');
+    var instructions = document.createElement('h4');
     instructions.className = "limitWidth";
     instructions.innerHTML = "Instructions: \n";
     document.getElementById('content').append(instructions);
