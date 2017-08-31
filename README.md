@@ -1,6 +1,4 @@
-# stretch
-
-## Download Stretch at http://tiny.cc/stretch
+# Download Stretch at http://tiny.cc/stretch
 
 #### What is Stretch?
 - Stretch is a Google Chrome extension that reminds users to stretch every 30, 60, or 120 minutes with office-friendly exercises taken from the Physera API. Options allow the user to enable/disable the application, set the frequency of reminders, and change what area of the body the exercises target.
@@ -13,5 +11,3 @@
 #### Stretch Links
 - Full Link: https://chrome.google.com/webstore/detail/jamggjgcdfapnjgnggmnhnfpinbgnnoi
 - More Info: https://physera.com
-
-## Download Stretch at http://tiny.cc/stretch
