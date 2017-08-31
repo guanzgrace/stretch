@@ -1,12 +1,14 @@
 # stretch
 
-Stretch is a Google Chrome extension that reminds users to stretch occasionally. Options allow the user to enable/disable the application and set the timing and frequency of reminders. Office-friendly exercises are taken from the Physera API.
+### Download Stretch at http://tiny.cc/stretch
+
+Stretch is a Google Chrome extension that reminds users to stretch every 30, 60, or 120 minutes. Options allow the user to enable/disable the application and to set the frequency of reminders. Office-friendly exercises are taken from the Physera API.
 
 Progress:
 - Working Version 1 (Beta Testing Version): notification page, storage for exercise.json, fix schedule for notifications, update aesthetics, options page, alarms reset, toggle on/off button, making sure that options fully work, need to test options from 9-5 and make sure they turn off post 5 pm, alarms reset
 - Working Version 2 (Mainfest Version 0.1.0): removed options page, frequency button, make window active when using chrome.tab.updates, bootstrapped, different types of exercises, ensure popup.html closes, create a fixed size for notification.html
 - Working Version 3 (Manifest Version 0.2.1 and 0.2.2): design overhaul
 
-Available at: https://chrome.google.com/webstore/detail/jamggjgcdfapnjgnggmnhnfpinbgnnoi
+Full Link: https://chrome.google.com/webstore/detail/jamggjgcdfapnjgnggmnhnfpinbgnnoi
 
-More info at: https://physera.com
+More Info: https://physera.com
