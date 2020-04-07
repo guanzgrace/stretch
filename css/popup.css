@@ -7,6 +7,9 @@ body { font-family: 'Roboto', sans-serif; font-size: 20px; width: 200px; height:
 .gray { background-color: #9d9eac; }
 .gray:hover { background-color: #babbc4; }
 .smaller { font-size: 13px; }
+.smallerlink { margin-top: 5px; padding: 2px; }
+.smallerlink a { font-size: 10px; text-decoration: none; color: #f2783c;}
+.smallerlink a:hover { font-size: 10px; text-decoration: none; color: #666;}
 a { font-size: 14px; }
 .line { width: 361px; height: 3px; border-bottom: solid 1px #e8eaf0; }
 
