@@ -8,6 +8,7 @@
 - Working Version 2 (Mainfest Version 0.1.0): removed options page, frequency button, make window active when using chrome.tab.updates, bootstrapped, different types of exercises, ensure popup.html closes, create a fixed size for notification.html
 - Working Version 3 (Manifest Version 0.2.1 and 0.2.2): design overhaul
 - Working Version 4 (Manifest Version 0.3.0): fix API bugs, push back to chrome store
+- Working Version 5 (Manifest Version 0.4.0): fix API bugs, add link to doc page in popup menu, push back to chrome store
 
 #### Stretch Links
 - Full Link: https://chrome.google.com/webstore/detail/stretch-reminder/mompfanjjmgmhfghbfjdkaebobndblmd/
