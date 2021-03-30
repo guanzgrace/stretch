@@ -1,5 +1,5 @@
 // popup javascript
-chrome.storage.local.get(['enabled', 'freq', 'type'], function(option) {
+chrome.storage.local.get(['enabled', 'freq', 'type', 'id'], function(option) {
     if (option.enabled != null) { // enabled or disabled; for first initialization, enable
 		if (! option.enabled) { document.getElementById("checkbox1").checked = false; } 
 		else { document.getElementById("checkbox1").checked = true; }  	
@@ -28,6 +28,15 @@ chrome.storage.local.get(['enabled', 'freq', 'type'], function(option) {
 		} 
     } else { // first initialization
     	document.getElementById("type").firstChild.data = "Upper Body";
+    }
+	if (option.id != null) { // id is set when logged in, null otherwise
+		if (option.type != null) {
+			document.getElementById("notification").style.display = "block";
+			document.getElementById("loginbtn").style.display = "none";
+		} 
+    } else { // first initialization
+		document.getElementById("notification").style.display = "none";
+		document.getElementById("loginbtn").style.display = "block";
     }
 });
 
@@ -84,6 +93,22 @@ document.getElementById("type").onclick = function(){
 	}
 };
 
+document.getElementById("loginbtn").onclick = function(){
+    console.log("Login button clicked");
+    chrome.storage.local.set({'id': "012"}, function() {
+		console.log("Set id to 0012");
+	  });
+};
+document.getElementById("logoutbtn").onclick = function(){
+    console.log("Logout button clicked");
+    chrome.storage.local.set({'id': null}, function() {
+		console.log("Set id to null");
+	  });
+	chrome.storage.local.set({'group': null}, function() {
+		console.log("Set group to null");
+	  });
+};
+
 document.getElementById("notification").onclick = function(){
     console.log("Calling openNotification in background.js.");
     var popupUrl = chrome.runtime.getURL('/notification.html');
@@ -94,3 +119,4 @@ document.getElementById("notification").onclick = function(){
         					 width: 1150, height: 720, top: 20, left: 20 });
     });
 };
+
