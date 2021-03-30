@@ -1,15 +1,14 @@
-# Read more about Stretch at http://guanzgrace.github.io/stretch
+# MIT Stretch Study Chrome Extension
 
-#### What is Stretch?
-- Stretch is a Google Chrome extension that reminds users to stretch every 30, 60, or 120 minutes with office-friendly exercises taken from the Physera API. Options allow the user to enable/disable the application, set the frequency of reminders, and change what area of the body the exercises target.
+#### What is this extension?
+- Stretch is a Google Chrome extension for use as part of the MIT STRETCH study on Zoom fatigue.
 
 #### Stretch Progress
-- Working Version 1 (Beta Testing Version): notification page, storage for exercise.json, fix schedule for notifications, update aesthetics, options page, alarms reset, toggle on/off button, making sure that options fully work, need to test options from 9-5 and make sure they turn off post 5 pm, alarms reset
-- Working Version 2 (Mainfest Version 0.1.0): removed options page, frequency button, make window active when using chrome.tab.updates, bootstrapped, different types of exercises, ensure popup.html closes, create a fixed size for notification.html
-- Working Version 3 (Manifest Version 0.2.1 and 0.2.2): design overhaul
-- Working Version 4 (Manifest Version 0.3.0): fix API bugs, push back to chrome store
-- Working Version 5 (Manifest Version 0.4.0): fix API bugs, add link to doc page in popup menu, push back to chrome store
+- v1 Initial UI fixes
 
-#### Stretch Links
-- Full Link: https://chrome.google.com/webstore/detail/stretch-reminder/mompfanjjmgmhfghbfjdkaebobndblmd/
-- More Info: https://physera.com
+#### Credits
+- Shreya Pandit
+- Nicole Pang
+- Javier Agüera
+- Former work by: Grace Guan & Jonathan Chang
+- Stretches provided by Physera
