@@ -48,17 +48,20 @@ document.getElementById("frequency").addEventListener('click', function(){
 	if(document.getElementById("frequency").firstChild.data == "Every 2 Hours") {
 		chrome.storage.local.set({'freq': 30}, function() {
 	      console.log("Set frequency to every 30 minutes.");
+	      chrome.runtime.sendMessage({ action: 'recreateAlarm' });
 	    });
 		document.getElementById("frequency").firstChild.data = "Every 30 Minutes";
 	} // currently says 30 min, set to be every hour
 	else if(document.getElementById("frequency").firstChild.data == "Every 30 Minutes")  {
 		chrome.storage.local.set({'freq': 60}, function() {
 	      console.log("Set frequency to every 60 minutes.");
+	      chrome.runtime.sendMessage({ action: 'recreateAlarm' });
 	    });
 		document.getElementById("frequency").firstChild.data = "Every 1 Hour";
 	} else { // currently says 1 hour, set to every 2 hours
 		chrome.storage.local.set({'freq': 120}, function() {
 	      console.log("Set frequency to every 120 minutes.");
+	      chrome.runtime.sendMessage({ action: 'recreateAlarm' });
 	    });
 		document.getElementById("frequency").firstChild.data = "Every 2 Hours";
 	}
