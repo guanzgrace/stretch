@@ -1,85 +1,25 @@
-// Queries for the noficiation html page.
+// Queries for the notification html page.
+// Loads exercise data from local JSON files.
 
-// check how long ago the exercises were saved, if they were saved more than
-// 1 month ago then re-get them and store them locally.
-chrome.storage.local.get('exercisesLastSaved', function(date) {
-    if (date.exercisesLastSaved == null) { 
-        queryAllAPIs(grabAndDisplayExercise); 
-    }
-    else {
-        var currentDate = new Date();
-        var currentDate_ms = currentDate.getTime();
-        if ((currentDate_ms - date.exercisesLastSaved) > (30 * 1000 * 60 * 60 * 24)) { 
-            queryAllAPIs(grabAndDisplayExercise); 
-        } else {
-            grabAndDisplayExercise();
-        }
-    }
-});
+const UPPER_BODY_URL = chrome.runtime.getURL('exercises/2074597.json');
+const LOWER_BODY_URL = chrome.runtime.getURL('exercises/2074598.json');
 
-function queryAllAPIs(callback) {
-    queryAPI(2074597, "upperbody", callback);
-    queryAPI(2074598, "lowerbody", callback);
-}
-
-// if the exercise is too old, re-get from website and save to storage.
-function queryAPI(workoutID, workoutType, callback){ 
-    var exercises;
-    var xhr = new XMLHttpRequest();
-    var URL = "https://physera.com/api/workout/" + workoutID;
-    xhr.open("GET", URL, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-            exercises = JSON.parse(xhr.responseText); // get the exercises
-            
-            var d = new Date(); // save the date we got this exercise
-            chrome.storage.local.set({'exercisesLastSaved': d.getTime()}, function() {
-                console.log("Current date " + d.getTime() + " saved as exercisesLastSaved.");
-            });
-
-            // save the results
-            // we can't do this modularly since set({key: result}) results in an error
-            if (workoutType == "upperbody") {
-                chrome.storage.local.set({"upperbodyresults": exercises}, function() {
-                  console.log("Saved " + workoutType + " results.");
-                });
-            } else if (workoutType == "lowerbody") {
-                chrome.storage.local.set({"lowerbodyresults": exercises}, function() {
-                  console.log("Saved " + workoutType + " results.");
-                  callback();
-                });
-            }
-        } // end if readystate = 4 statement
-    } // end xhr on ready state change function
-    xhr.send();  
-} 
+grabAndDisplayExercise();
 
 function grabAndDisplayExercise() {
-    var results;
     chrome.storage.local.get('type', function(data) {
-        var type;
-        if (data.type == null) { type = "upperbody"; }
-        else { type = data.type; }
-        if (type == "upperbody") {
-            chrome.storage.local.get("upperbodyresults", function(data) {
-                pickRandomExercise(data.upperbodyresults.exercises);
-            });
+        let type = data.type || "upperbody";
+        let url;
+        if (type == "fullbody") {
+            url = Math.round(Math.random()) == 0 ? UPPER_BODY_URL : LOWER_BODY_URL;
         } else if (type == "lowerbody") {
-            chrome.storage.local.get("lowerbodyresults", function(data) {
-                pickRandomExercise(data.lowerbodyresults.exercises);
-            });
-        } else if (type == "fullbody") {
-            var upperOrLower = Math.round(Math.random());
-            if (upperOrLower == 0) {
-                chrome.storage.local.get("upperbodyresults", function(data) {
-                    pickRandomExercise(data.upperbodyresults.exercises);
-                });
-            } else {
-                chrome.storage.local.get("lowerbodyresults", function(data) {
-                    pickRandomExercise(data.lowerbodyresults.exercises);
-                });
-            }
+            url = LOWER_BODY_URL;
+        } else {
+            url = UPPER_BODY_URL;
         }
+        fetch(url)
+            .then(response => response.json())
+            .then(data => pickRandomExercise(data.exercises));
     });
 }
 

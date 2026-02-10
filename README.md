@@ -9,7 +9,13 @@
 - Working Version 3 (Manifest Version 0.2.1 and 0.2.2): design overhaul
 - Working Version 4 (Manifest Version 0.3.0): fix API bugs, push back to chrome store
 - Working Version 5 (Manifest Version 0.4.0): fix API bugs, add link to doc page in popup menu, push back to chrome store
+- Working Version 6 (Manifest Version 0.5.0): modernize app
+    - Migrated to Manifest V3 (service worker, action API)
+    - Removed jQuery and Bootstrap JS dependencies
+    - Localized exercise data (no longer fetches from external API)
+    - Optimized tab tracking with chrome.storage.session
+    - Switched event handlers to addEventListener
+    - Centralized notification logic in background service worker
 
 #### Stretch Links
-- Full Link: https://chrome.google.com/webstore/detail/stretch-reminder/mompfanjjmgmhfghbfjdkaebobndblmd/
-- More Info: https://physera.com
+- More Info: http://guanzgrace.github.io/stretch
