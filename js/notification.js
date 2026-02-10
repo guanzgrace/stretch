@@ -41,12 +41,12 @@ function displayExercise(selectedExercise) {
 
     var rc = selectedExercise.reps;
     var rt = selectedExercise.rep_time;
-    if (rc != null & rt != null) {
+    if (rc != null && rt != null) {
         var repetitions = document.createElement('p');
         var repString = "<i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i> ";
         repString += rc;
         if (rc > 1) { repString += " repetitions, one every " + rt + " seconds."; }
-        else if (rc = 1) { repString += " repetition for " + rt + " seconds."; }
+        else if (rc == 1) { repString += " repetition for " + rt + " seconds."; }
         repetitions.innerHTML = repString;
         document.getElementById('content').append(repetitions);
     }
