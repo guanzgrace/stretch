@@ -31,19 +31,19 @@ chrome.storage.local.get(['enabled', 'freq', 'type'], function(option) {
     }
 });
 
-document.getElementById("checkbox1").onclick = function(){
+document.getElementById("checkbox1").addEventListener('click', function(){
 	if(document.getElementById("checkbox1").checked == false) {
 		chrome.storage.local.set({'enabled': false}, function() {
 	      console.log("Enabled set to false.");
 	    });
-	} else { // currently says disable
+	} else {
 		chrome.storage.local.set({'enabled': true}, function() {
 	      console.log("Enabled set to true.");
 	    });
 	}
-};
+});
 
-document.getElementById("frequency").onclick = function(){
+document.getElementById("frequency").addEventListener('click', function(){
 	// currently is 2 hours, set to be every 30 min
 	if(document.getElementById("frequency").firstChild.data == "Every 2 Hours") {
 		chrome.storage.local.set({'freq': 30}, function() {
@@ -51,7 +51,7 @@ document.getElementById("frequency").onclick = function(){
 	    });
 		document.getElementById("frequency").firstChild.data = "Every 30 Minutes";
 	} // currently says 30 min, set to be every hour
-	else if(document.getElementById("frequency").firstChild.data == "Every 30 Minutes")  { 
+	else if(document.getElementById("frequency").firstChild.data == "Every 30 Minutes")  {
 		chrome.storage.local.set({'freq': 60}, function() {
 	      console.log("Set frequency to every 60 minutes.");
 	    });
@@ -62,9 +62,9 @@ document.getElementById("frequency").onclick = function(){
 	    });
 		document.getElementById("frequency").firstChild.data = "Every 2 Hours";
 	}
-};
+});
 
-document.getElementById("type").onclick = function(){
+document.getElementById("type").addEventListener('click', function(){
 	// currently upper body, set to lower body
 	if(document.getElementById("type").firstChild.data == "Upper Body") {
 		chrome.storage.local.set({'type': "lowerbody"}, function() {
@@ -82,15 +82,9 @@ document.getElementById("type").onclick = function(){
 	    });
 		document.getElementById("type").firstChild.data = "Upper Body";
 	}
-};
+});
 
-document.getElementById("notification").onclick = function(){
-    console.log("Calling openNotification in background.js.");
-    var popupUrl = chrome.runtime.getURL('/notification.html');
-    chrome.tabs.query({url:popupUrl}, function(tabs){
-    	window.close();
-        if(tabs.length > 0){ chrome.tabs.remove(tabs[0].id); }
-        chrome.windows.create({ url: 'notification.html', type: "popup",
-        					 width: 1150, height: 720, top: 20, left: 20 });
-    });
-};
+document.getElementById("notification").addEventListener('click', function(){
+    chrome.runtime.sendMessage({ action: 'openNotification' });
+    window.close();
+});
