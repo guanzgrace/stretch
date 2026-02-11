@@ -21,7 +21,6 @@ async function cycleOption(element, options, storageKey, onSave) {
 
     element.firstChild.data = next.label;
     await chrome.storage.local.set({ [storageKey]: next.value });
-    console.log(`Set ${storageKey} to ${next.value}.`);
     if (onSave) onSave();
 }
 
@@ -44,7 +43,6 @@ async function cycleOption(element, options, storageKey, onSave) {
 document.getElementById("checkbox1").addEventListener('click', async () => {
     const enabled = document.getElementById("checkbox1").checked;
     await chrome.storage.local.set({ enabled });
-    console.log(`Enabled set to ${enabled}.`);
 });
 
 document.getElementById("frequency").addEventListener('click', () => {

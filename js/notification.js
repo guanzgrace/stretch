@@ -6,26 +6,26 @@ const LOWER_BODY_URL = chrome.runtime.getURL('exercises/2074598.json');
 
 grabAndDisplayExercise();
 
-function grabAndDisplayExercise() {
-    chrome.storage.local.get('type', function(data) {
-        let type = data.type || "upperbody";
+async function grabAndDisplayExercise() {
+    try {
+        const { type: savedType } = await chrome.storage.local.get('type');
+        const type = savedType || "upperbody";
         let url;
-        if (type == "fullbody") {
-            url = Math.round(Math.random()) == 0 ? UPPER_BODY_URL : LOWER_BODY_URL;
-        } else if (type == "lowerbody") {
+        if (type === "fullbody") {
+            url = Math.round(Math.random()) === 0 ? UPPER_BODY_URL : LOWER_BODY_URL;
+        } else if (type === "lowerbody") {
             url = LOWER_BODY_URL;
         } else {
             url = UPPER_BODY_URL;
         }
-        fetch(url)
-            .then(response => response.json())
-            .then(data => pickRandomExercise(data.exercises))
-            .catch(() => {
-                const msg = document.createElement('h2');
-                msg.textContent = "Could not load exercises. Please try again.";
-                document.getElementById('content').append(msg);
-            });
-    });
+        const response = await fetch(url);
+        const data = await response.json();
+        pickRandomExercise(data.exercises);
+    } catch {
+        const msg = document.createElement('h2');
+        msg.textContent = "Could not load exercises. Please try again.";
+        document.getElementById('content').append(msg);
+    }
 }
 
 // picks a random exercise, displays if it's valid
@@ -58,7 +58,7 @@ function displayExercise(selectedExercise) {
         repetitions.append(icon);
         let repText = " " + rc;
         if (rc > 1) { repText += " repetitions, one every " + rt + " seconds."; }
-        else if (rc == 1) { repText += " repetition for " + rt + " seconds."; }
+        else if (rc === 1) { repText += " repetition for " + rt + " seconds."; }
         repetitions.append(repText);
         document.getElementById('content').append(repetitions);
     }
@@ -84,6 +84,7 @@ function displayExercise(selectedExercise) {
         const image = document.createElement('img');
         image.src = imageURL;
         image.className = "img-responsive";
+        image.alt = selectedExercise.display_name;
         document.getElementById('image').append(image);
     }
 }
