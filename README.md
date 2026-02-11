@@ -64,14 +64,14 @@ When a reminder fires, a popup window opens with a random exercise, including th
 
 ## Version History
 
-| Version | Highlights |
-|---------|------------|
-| 0.5.1 | Fixed alarm firing on Chrome restart; fixed alarm timing not respecting frequency setting; minor bug fixes |
-| 0.5.0 | Migrated to Manifest V3, removed jQuery/Bootstrap JS, localized exercise data, optimized tab tracking |
-| 0.4.0 | API bug fixes, added About link in popup |
-| 0.3.0 | API bug fixes, re-published to Chrome Web Store |
-| 0.2.x | Design overhaul |
-| 0.1.0 | First published version — frequency selector, exercise types, bootstrap styling |
+| Version | Date | Highlights |
+|---------|------|------------|
+| 0.5.1 | Feb 2026 | Fixed alarm firing on Chrome restart; fixed alarm timing not respecting frequency setting; minor bug fixes |
+| 0.5.0 | Feb 2026 | Migrated to Manifest V3, removed jQuery/Bootstrap JS, localized exercise data, optimized tab tracking |
+| 0.4.0 | Apr 2020 | API bug fixes, added About link in popup |
+| 0.3.0 | Sep 2018 | API bug fixes, re-published to Chrome Web Store |
+| 0.2.x | Aug 2017 | Design overhaul |
+| 0.1.0 | Jun 2017 | First published version — frequency selector, exercise types, bootstrap styling |
 
 ## Privacy Policy
 
