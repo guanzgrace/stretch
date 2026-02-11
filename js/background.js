@@ -2,10 +2,12 @@
 
 // When the service worker starts (browser launch, wake from idle, extension install/update),
 // ensure an alarm exists — but don't create a duplicate if one is already running.
-const existingAlarm = await chrome.alarms.get('alarmStart');
-if (!existingAlarm) {
-    await recreateAlarm();
-}
+(async () => {
+    const existingAlarm = await chrome.alarms.get('alarmStart');
+    if (!existingAlarm) {
+        await recreateAlarm();
+    }
+})();
 
 // Creates (or recreates) the stretch reminder alarm.
 // Uses delayInMinutes so the first fire happens after one full interval,

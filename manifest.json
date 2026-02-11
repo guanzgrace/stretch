@@ -9,8 +9,7 @@
     "128": "logo/Logo_physera_128.png"
   },
   "background": {
-    "service_worker": "js/background.js",
-    "type": "module"
+    "service_worker": "js/background.js"
   },
   "homepage_url": "https://guanzgrace.github.io/stretch/",
   "short_name": "Stretch",
