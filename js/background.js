@@ -45,7 +45,8 @@ async function openNotification() {
 // Reads the saved frequency from storage and creates an alarm with it (default: 30 min).
 async function recreateAlarm() {
     const { freq: savedFreq } = await chrome.storage.local.get('freq');
-    const freq = savedFreq != null ? parseInt(savedFreq, 10) : 30;
+    const parsed = parseInt(savedFreq, 10);
+    const freq = [30, 60, 120].includes(parsed) ? parsed : 30;
     await createAlarm(freq);
 }
 
@@ -69,7 +70,7 @@ chrome.alarms.onAlarm.addListener(async function(alarm) {
     }
     // enabled === true or null (first run) — show the notification.
     await openNotification();
-    if (enabled == null) {
+    if (enabled === null || enabled === undefined) {
         await chrome.storage.local.set({ 'enabled': true });
     }
 });
