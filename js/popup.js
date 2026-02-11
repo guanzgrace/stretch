@@ -32,7 +32,7 @@ async function cycleOption(element, options, storageKey, onSave) {
     const checkbox = document.getElementById("checkbox1");
     checkbox.checked = option.enabled !== false;
 
-    const freqLabel = FREQ_OPTIONS.find(o => o.value === parseInt(option.freq))?.label
+    const freqLabel = FREQ_OPTIONS.find(o => o.value === option.freq)?.label
         ?? FREQ_OPTIONS[0].label;
     document.getElementById("frequency").firstChild.data = freqLabel;
 

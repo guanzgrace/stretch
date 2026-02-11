@@ -1,5 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,500);
-body { margin-bottom: 75px; font-family: 'Roboto', sans-serif; text-align: center; font-size: 16px; }
+body { margin-bottom: 75px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; text-align: center; font-size: 16px; }
 img { display: block; margin: auto; max-height: 320px; }
 #content { text-align: left; }
 html { position: relative; min-height: 100%; height: 100%; }

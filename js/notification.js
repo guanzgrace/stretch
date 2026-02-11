@@ -19,66 +19,71 @@ function grabAndDisplayExercise() {
         }
         fetch(url)
             .then(response => response.json())
-            .then(data => pickRandomExercise(data.exercises));
+            .then(data => pickRandomExercise(data.exercises))
+            .catch(() => {
+                const msg = document.createElement('h2');
+                msg.textContent = "Could not load exercises. Please try again.";
+                document.getElementById('content').append(msg);
+            });
     });
 }
 
 // picks a random exercise, displays if it's valid
 function pickRandomExercise(exercises){
-    var valid = exercises.filter(
+    const valid = exercises.filter(
         e => !e.exercise.display_name.includes("DELETE")
     );
     if (valid.length === 0) {
-        var msg = document.createElement('h2');
+        const msg = document.createElement('h2');
         msg.textContent = "No exercises available.";
         document.getElementById('content').append(msg);
         return;
     }
-    var selected = valid[Math.floor(Math.random() * valid.length)];
+    const selected = valid[Math.floor(Math.random() * valid.length)];
     displayExercise(selected.exercise);
 }
 
 // javascript to append to the html page to display an exercise, precondition it is valid
 function displayExercise(selectedExercise) {
-    var displayName = document.createElement('h2');
+    const displayName = document.createElement('h2');
     displayName.textContent = selectedExercise.display_name;
     document.getElementById('content').append(displayName);
 
-    var rc = selectedExercise.reps;
-    var rt = selectedExercise.rep_time;
+    const rc = selectedExercise.reps;
+    const rt = selectedExercise.rep_time;
     if (rc != null && rt != null) {
-        var repetitions = document.createElement('p');
-        var icon = document.createElement('i');
-        icon.className = "fa fa-clock-o";
-        icon.setAttribute("aria-hidden", "true");
+        const repetitions = document.createElement('p');
+        const icon = document.createElement('span');
+        icon.textContent = "\u23F0";
         repetitions.append(icon);
-        var repText = " " + rc;
+        let repText = " " + rc;
         if (rc > 1) { repText += " repetitions, one every " + rt + " seconds."; }
         else if (rc == 1) { repText += " repetition for " + rt + " seconds."; }
         repetitions.append(repText);
         document.getElementById('content').append(repetitions);
     }
 
-    var br = document.createElement('br');
+    const br = document.createElement('br');
     document.getElementById('content').appendChild(br);
-    
-    var inst = selectedExercise.instructions;
-    var instructions = document.createElement('h4');
-    instructions.className = "limitWidth";
-    instructions.textContent = "Instructions:";
-    document.getElementById('content').append(instructions);
-    for (const [i, step] of inst.entries()) {
-        var instruction = document.createElement('p');
-        var index = i + 1;
-        instruction.textContent = index + '. ' + step.text;
-        document.getElementById('content').append(instruction);
+
+    const inst = selectedExercise.instructions;
+    if (inst && inst.length > 0) {
+        const instructions = document.createElement('h4');
+        instructions.textContent = "Instructions:";
+        document.getElementById('content').append(instructions);
+        for (const [i, step] of inst.entries()) {
+            const instruction = document.createElement('p');
+            const index = i + 1;
+            instruction.textContent = index + '. ' + step.text;
+            document.getElementById('content').append(instruction);
+        }
     }
 
-    var imageURL = selectedExercise.images[0].urls.original;
-    var image = document.createElement('img');
-    image.src = imageURL;
-    image.className = "img-responsive";
-    image.style.maxWidth = "100%";
-    image.style.height = "auto";
-    document.getElementById('image').append(image);
+    if (selectedExercise.images && selectedExercise.images.length > 0) {
+        const imageURL = selectedExercise.images[0].urls.original;
+        const image = document.createElement('img');
+        image.src = imageURL;
+        image.className = "img-responsive";
+        document.getElementById('image').append(image);
+    }
 }
