@@ -11,7 +11,7 @@
   "background": {
     "service_worker": "js/background.js"
   },
-  "homepage_url": "https://guanzgrace.github.io/stretch/",
+  "homepage_url": "https://github.com/guanzgrace/stretch",
   "short_name": "Stretch",
   "permissions": ["storage", "alarms"],
   "action": {

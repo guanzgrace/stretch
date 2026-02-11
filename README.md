@@ -20,7 +20,7 @@ A Chrome extension that reminded users to stretch every 30, 60, or 120 minutes w
 
 | Popup | Exercise Notification |
 |-------|----------------------|
-| ![Popup](logo/Screenshot-1.png) | ![Notification](logo/Screenshot-2.png) |
+| ![Popup](logo/Screenshot-1-White.png) | ![Notification](logo/Screenshot-2-White.png) |
 
 ## Running Locally
 
@@ -53,14 +53,13 @@ When a reminder fires, a popup window opens with a random exercise, including th
 │   ├── background.js      # Service worker — alarm & notification logic
 │   ├── popup.js           # Popup controls & settings
 │   ├── notification.js    # Exercise selection & display
-│   └── fontawesome.js     # Icon font
 ├── css/
 │   ├── popup.css          # Popup styles
 │   ├── notification.css   # Notification styles
 │   └── bootstrap.min.css  # Bootstrap (notification layout)
 ├── exercises/             # Bundled exercise data (JSON)
 ├── logo/                  # Icons & screenshots
-└── docs/                  # GitHub Pages site
+└── docs/                  # GitHub Pages redirect
 ```
 
 ## Version History
@@ -74,11 +73,14 @@ When a reminder fires, a popup window opens with a random exercise, including th
 | 0.2.x | Design overhaul |
 | 0.1.0 | First published version — frequency selector, exercise types, bootstrap styling |
 
-## Links
+## Privacy Policy
 
-- [Project homepage](https://guanzgrace.github.io/stretch/)
-- Exercise data sourced from [Physera](https://physera.com/)
+This extension does not collect any personal data. All exercise data is bundled locally — no network requests are made except to load exercise images. No data is shared with any third party.
+
+## Credits
+
+Special thanks to Dan, Cam, Jonathan, Inna, and the rest of the [Physera](https://physera.com/) team (now part of [Omada Health](https://www.omadahealth.com/)) for helping improve the design, functionality, and code of the application.
 
 ## License
 
-This project is open source. Exercise data and illustrations are property of Physera.
+This project is open source. Exercise data and illustrations are property of Physera / Omada Health.
