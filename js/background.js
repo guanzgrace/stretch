@@ -3,6 +3,8 @@
 // When the service worker starts (browser launch, wake from idle, extension install/update),
 // ensure an alarm exists — but don't create a duplicate if one is already running.
 (async () => {
+    const { enabled } = await chrome.storage.local.get('enabled');
+    if (enabled === false) return;
     const existingAlarm = await chrome.alarms.get('alarmStart');
     if (!existingAlarm) {
         await recreateAlarm();
@@ -56,6 +58,8 @@ chrome.runtime.onMessage.addListener(function(message) {
         openNotification().catch(e => console.error('Failed to open notification:', e));
     } else if (message.action === 'recreateAlarm') {
         recreateAlarm().catch(e => console.error('Failed to recreate alarm:', e));
+    } else if (message.action === 'clearAlarm') {
+        chrome.alarms.clearAll().catch(e => console.error('Failed to clear alarm:', e));
     }
 });
 

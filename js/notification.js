@@ -81,11 +81,14 @@ function displayExercise(selectedExercise) {
     }
 
     if (selectedExercise.images && selectedExercise.images.length > 0) {
-        const imageURL = selectedExercise.images[0].urls.original;
-        const image = document.createElement('img');
-        image.src = imageURL;
-        image.className = "img-responsive";
-        image.alt = selectedExercise.display_name;
-        document.getElementById('image').append(image);
+        const imageURL = selectedExercise.images[0]?.urls?.original;
+        if (imageURL) {
+            const image = document.createElement('img');
+            image.src = imageURL;
+            image.className = "img-responsive";
+            image.alt = selectedExercise.display_name;
+            image.onerror = () => image.remove();
+            document.getElementById('image').append(image);
+        }
     }
 }

@@ -43,6 +43,11 @@ async function cycleOption(element, options, storageKey, onSave) {
 document.getElementById("checkbox1").addEventListener('click', async () => {
     const enabled = document.getElementById("checkbox1").checked;
     await chrome.storage.local.set({ enabled });
+    if (enabled) {
+        chrome.runtime.sendMessage({ action: 'recreateAlarm' });
+    } else {
+        chrome.runtime.sendMessage({ action: 'clearAlarm' });
+    }
 });
 
 document.getElementById("frequency").addEventListener('click', () => {

@@ -15,8 +15,13 @@ a { font-size: 14px; }
 /* adapted from https://codepen.io/designcouch/pen/sDAvk */
 *,*:before,*:after{
 	box-sizing: border-box;
-	transition:.25s ease-in-out;
 	outline:none;
+}
+.checkbox-label,
+.checkbox-label:before,
+.checkbox-label:after,
+.buttonlink {
+	transition:.25s ease-in-out;
 }
 #toggles{
 	width: 40px;
