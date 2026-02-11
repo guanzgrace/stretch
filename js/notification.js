@@ -25,29 +25,37 @@ function grabAndDisplayExercise() {
 
 // picks a random exercise, displays if it's valid
 function pickRandomExercise(exercises){
-    var exerciseKeys = Object.keys(exercises);
-    var randomKey = exerciseKeys[Math.floor(Math.random() * exerciseKeys.length)];
-    var selectedExercise = exercises[randomKey].exercise;
-    var valid = ! selectedExercise.display_name.includes("DELETE");
-    if (valid) { displayExercise(selectedExercise); }
-    else { pickRandomExercise(exercises); }
+    var valid = exercises.filter(
+        e => !e.exercise.display_name.includes("DELETE")
+    );
+    if (valid.length === 0) {
+        var msg = document.createElement('h2');
+        msg.textContent = "No exercises available.";
+        document.getElementById('content').append(msg);
+        return;
+    }
+    var selected = valid[Math.floor(Math.random() * valid.length)];
+    displayExercise(selected.exercise);
 }
 
 // javascript to append to the html page to display an exercise, precondition it is valid
 function displayExercise(selectedExercise) {
     var displayName = document.createElement('h2');
-    displayName.innerHTML = selectedExercise.display_name;
+    displayName.textContent = selectedExercise.display_name;
     document.getElementById('content').append(displayName);
 
     var rc = selectedExercise.reps;
     var rt = selectedExercise.rep_time;
     if (rc != null && rt != null) {
         var repetitions = document.createElement('p');
-        var repString = "<i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i> ";
-        repString += rc;
-        if (rc > 1) { repString += " repetitions, one every " + rt + " seconds."; }
-        else if (rc == 1) { repString += " repetition for " + rt + " seconds."; }
-        repetitions.innerHTML = repString;
+        var icon = document.createElement('i');
+        icon.className = "fa fa-clock-o";
+        icon.setAttribute("aria-hidden", "true");
+        repetitions.append(icon);
+        var repText = " " + rc;
+        if (rc > 1) { repText += " repetitions, one every " + rt + " seconds."; }
+        else if (rc == 1) { repText += " repetition for " + rt + " seconds."; }
+        repetitions.append(repText);
         document.getElementById('content').append(repetitions);
     }
 
@@ -57,20 +65,20 @@ function displayExercise(selectedExercise) {
     var inst = selectedExercise.instructions;
     var instructions = document.createElement('h4');
     instructions.className = "limitWidth";
-    instructions.innerHTML = "Instructions: \n";
+    instructions.textContent = "Instructions:";
     document.getElementById('content').append(instructions);
-    for (i in inst) {
+    for (const [i, step] of inst.entries()) {
         var instruction = document.createElement('p');
-        var index = Number(i) + 1;
-        instruction.innerHTML = index + '. ' + inst[i].text;
+        var index = i + 1;
+        instruction.textContent = index + '. ' + step.text;
         document.getElementById('content').append(instruction);
     }
 
     var imageURL = selectedExercise.images[0].urls.original;
     var image = document.createElement('img');
     image.src = imageURL;
-    image.setAttribute("class", "img-responsive");
-    image.setAttribute("max-width", "100%");
-    image.setAttribute("height", "auto");
+    image.className = "img-responsive";
+    image.style.maxWidth = "100%";
+    image.style.height = "auto";
     document.getElementById('image').append(image);
 }
