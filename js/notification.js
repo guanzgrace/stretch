@@ -21,7 +21,8 @@ async function grabAndDisplayExercise() {
         const response = await fetch(url);
         const data = await response.json();
         pickRandomExercise(data.exercises);
-    } catch {
+    } catch (error) {
+        console.error('Failed to load exercises:', error);
         const msg = document.createElement('h2');
         msg.textContent = "Could not load exercises. Please try again.";
         document.getElementById('content').append(msg);
