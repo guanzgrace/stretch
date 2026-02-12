@@ -11,13 +11,17 @@
     }
 })();
 
-// Creates (or recreates) the stretch reminder alarm.
-// Uses delayInMinutes so the first fire happens after one full interval,
-// not immediately (which was the old bug — a past `when` timestamp fired instantly).
+// Creates (or recreates) the stretch reminder alarm, aligned to clock boundaries.
+// Uses midnight as an anchor so a 30-min alarm fires at :00 and :30,
+// a 60-min alarm fires on the hour, etc.
 async function createAlarm(freq) {
     await chrome.alarms.clearAll();
+    const now = Date.now();
+    const midnight = new Date().setHours(0, 0, 0, 0);
+    const msInterval = freq * 60000;
+    const nextFire = midnight + Math.ceil((now - midnight) / msInterval) * msInterval;
     await chrome.alarms.create('alarmStart', {
-        delayInMinutes: freq,
+        when: nextFire,
         periodInMinutes: freq
     });
 }
