@@ -1,12 +1,8 @@
 # Stretch Reminder
 
-> **Note:** This project is no longer actively maintained and has been removed from the Chrome Web Store. It was originally published as a Chrome extension from 2016–2024 with 1000+ daily active users. The source code is preserved here for reference. You can still run it locally by loading it as an unpacked extension.
+> **Note:** This project is no longer actively maintained and has been removed from the Chrome Web Store. It was originally published as a Chrome extension from 2016–2024 with 1000+ daily active users. The source code is preserved here for reference. You can still run it locally by loading it as an unpacked extension. See `potential_features.md` for ideas if you'd like to fork and extend this project
 
 A Chrome extension that reminded users to stretch every 30, 60, or 120 minutes with office-friendly exercises. Built to help people take care of their bodies during long work sessions.
-
-<p align="center">
-  <img src="logo/Logo_physera_128.png" alt="Stretch Reminder logo" width="100">
-</p>
 
 ## Features
 
